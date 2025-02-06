@@ -1,0 +1,317 @@
+.box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.single-publicacoes {
+    margin-top: 142px;
+    margin-bottom: 80px;
+}
+
+.single-publicacoes .main-title {
+    text-align: left;
+    font-family: Noto Serif;
+    font-size: 40px;
+    font-weight: 600;
+    line-height: 54px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+
+.single-publicacoes .artigo {
+    background-color: #EA4D2B;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 2px;
+    font-family: Noto Serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 19px;
+    letter-spacing: 0em;
+    text-align: center;
+    color: white;
+    margin-right: 5px;
+}
+
+.single-publicacoes .subtitle {
+    font-family: Noto Serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 19px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #A8A8A8;
+}
+
+.single-publicacoes .see-more {
+    font-family: Noto Sans;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 12px;
+    letter-spacing: 0em;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.single-publicacoes .see-more a {
+    color: #EA4D2B !important;
+}
+
+.single-publicacoes .more-than {
+    font-family: Noto Serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 19px;
+    letter-spacing: 0em;
+    color: #EA4D2B;
+}
+
+.single-publicacoes .line-bottom {
+    border-bottom: 1px solid #E2E2E2;
+    padding-bottom: 2px;
+    margin-bottom: 33px;
+}
+
+.other-notice .card-img {
+    height: 104px;
+    object-fit: cover;
+}
+
+.other-notice .category {
+    font-family: Noto Sans;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 20px;
+    letter-spacing: 0em;
+    color: #737373;
+}
+
+.other-notice .card-title {
+    margin: 0px;
+    font-family: Noto Serif;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 20px;
+    letter-spacing: 0em;
+}
+
+.other-notice .card-text {
+    font-family: Noto Sans;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+
+.other-notice .content div {
+    padding-left: 10px;
+    color: #373737;
+}
+
+.other-notice .subtitle {
+    font-size: 9px;
+    line-height: 10px;
+}
+
+@media only screen and (max-width: 768px) {
+    .more-publications {
+        margin-top: 80px;
+    }
+
+    .notice-pd-right {
+        padding-top: 33px;
+    }
+
+    .notice-pd-right img {
+        width: 420px;
+        height: 237px;
+    }
+
+    .img-top-text {
+        width: 100% !important;
+        height: 174px !important;
+        object-fit: cover;
+        position: unset !important;
+    }
+}
+
+@media only screen and (min-width: 769px) {
+    .notice-pd-right {
+        padding-right: 48px !important;
+        padding-top: 33px;
+    }
+
+    .notice-pd-right img {
+        width: 420px;
+        height: 237px;
+        right: 48px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 25px;
+        margin-bottom: 25px;
+    }
+
+    .img-top-text {
+        width: 310px !important;
+        height: 174px !important;
+        object-fit: cover;
+        position: unset !important;
+        vertical-align: text-top;
+        float: left;
+        margin-right: 16px !important;
+        margin-top: 0px !important;
+        margin-bottom: 0px !important;
+    }
+}
+
+.tipo {
+    position: absolute;
+    right: 0;
+    bottom: 10px;
+    width: 73px;
+    height: 16px;
+    background: #ea4d2b;
+    border-radius: 2px 0px 0px 2px;
+    padding-left: 4px;
+    overflow: hidden;
+    font-family: Noto Serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0em;
+    color: white;
+}
+
+.img-giant {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(10px);
+    position: fixed;
+    z-index: 1030;
+    width: 100%;
+    height: 100vh;
+    top: 0px;
+    display: none;
+    overflow: hidden;
+}
+
+.img-giant img {
+    width: max-content;
+    max-width: 90%;
+    height: max-content;
+    max-height: 100%;
+    object-fit: contain;
+    box-shadow: 0px 18px 62px rgba(0, 0, 0, 0.2);
+}
+
+
+.single-publicacoes .notice-pd-right img:hover {
+    -webkit-transition: all .3s ease-in;
+    -moz-transition: all .3s ease-in;
+    -ms-transition: all .3s ease-in;
+    -o-transition: all .3s ease-in;
+    transition: all .3s ease-in;
+    transform: scale(1.15);
+    -ms-transform: scale(1.15);
+    /* IE 9 */
+    -webkit-transform: scale(1.15);
+    /* Safari and Chrome */
+}
+
+
+.btnLike {
+    background-color: #E4E4E5;
+    height: 33px;
+    text-align: center;
+    border-radius: 30px;
+    padding: 8px 15px !important;
+    color: #7A7A7A !important;
+    font-weight: bold;
+}
+
+.btnLike .iconeLiked {
+    content: url('../images/icons/no_liked.png');
+    width: 16px;
+    height: 16px;
+}
+
+.btnLike:hover .iconeLiked {
+    content: url('../images/icons/liked.png') !important;
+}
+
+.btnLike.active .iconeLiked {
+    content: url('../images/icons/liked.png') !important;
+    width: 16px;
+    height: 16px;
+}
+
+.btnLike span {
+    vertical-align: bottom;
+}
+
+.btnLike:hover {
+    color: #DB1924 !important;
+}
+
+.btnLike.active {
+    color: #DB1924 !important;
+}
+
+/* Wordpress */
+
+.wp-caption {
+    max-width: 100% !important;
+
+}
+
+.wp-caption.aligncenter {
+    text-align: center;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.wp-caption.alignleft {
+    text-align: left;
+    position: relative;
+    margin-left: 0;
+    margin-right: auto;
+}
+
+.wp-caption.alignright {
+    text-align: right;
+    position: relative;
+    margin-left: auto;
+    margin-right: 0;
+}
+
+/* Estilo para o seletor de idioma */
+.languages .gtranslate_wrapper {
+    padding-left: 0;
+    margin-left: 0;
+}
+
+.languages .gtranslate_wrapper a {
+    color: #000;
+}
+
+@media only screen and (max-width: 768px) {
+    .languages .gtranslate_wrapper .gt-current-lang {
+        font-weight: bold;
+    }
+}
+
+@media screen and (min-device-width: 769px) and (max-device-width: 2000px) { 
+    .languages .gtranslate_wrapper .gt-current-lang {
+        font-weight: 400;
+    }
+}
+
+.languages .gtranslate_wrapper a:hover {
+    color: #000;
+    opacity: 0.7;
+}

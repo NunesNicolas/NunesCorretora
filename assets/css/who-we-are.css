@@ -1,0 +1,302 @@
+.box,
+.box-center,
+.box-left {
+  display: flex;
+  flex-direction: row;
+  align-content: space-between;
+}
+.box {
+  justify-content: space-between;
+}
+.box-left {
+  justify-content: left;
+}
+.box-center {
+  justify-content: center;
+}
+
+.navbar-nav {
+  align-items: center;
+}
+
+.navbar-desktop .navQuemSomos {
+  background: #fafafa;
+  border-radius: 99px;
+  color: #bc222c !important;
+  font-family: "Noto Sans";
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px;
+  height: 24px;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.navbar-mobile .navQuemSomos {
+  color: #bc222c !important;
+}
+
+.who-we-are .top {
+  background-image: url("../images/backgrounds/who-we-are-top-background.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100%;
+  margin-top: 100px;
+  padding-top: 45px;
+  padding-bottom: 60px;
+}
+
+.who-we-are .top .bolder {
+  font-family: Noto Sans;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 14px;
+  letter-spacing: 0em;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+@media only screen and (min-width: 600px) {
+  .who-we-are .team .row {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+.who-we-are .team p,
+.who-we-are .principios p,
+.bottom p {
+  margin-top: 39px;
+  text-align: center;
+  width: 100%;
+  font-family: Noto Serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 22px;
+  letter-spacing: 0em;
+  color: #BC202B;
+  padding-bottom: 11px;
+  border-bottom: 1px solid #e2e2e2;
+}
+
+.bottom p {
+  margin: 0px;
+  padding-bottom: 0px;
+  border-bottom: none;
+  text-align: left;
+}
+
+.who-we-are .principios p {
+  margin-bottom: 28px;
+}
+
+.who-we-are .col-sm {
+  display: flex;
+  justify-content: center;
+}
+
+.who-we-are .title {
+  font-family: Noto Serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 16px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #a8a8a8;
+  margin-top: 10px;
+  margin-bottom: 0px;
+}
+
+.who-we-are .team .employee .content {
+  font-family: Noto Serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.who-we-are .employees {
+  margin-top: 36px;
+  padding-top: 17px;
+  padding-bottom: 23px;
+  background: #f6f6f6;
+}
+
+.who-we-are .employees .card-employee {
+  width: 90px;
+  height: 110px;
+  border: 1px solid #e1e1e1;
+  border-radius: 2px;
+  position: relative;
+}
+
+.who-we-are .employees .card-employee-image {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  object-fit: cover;
+  background-position-x: center;
+}
+
+.who-we-are .employees .card-employee .card-foot {
+  position: absolute;
+  background-color: #cc3818;
+  bottom: 0px;
+  width: 100%;
+  height: 33px;
+  border-radius: 2px;
+  color: white;
+  font-family: "Noto Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 9px;
+  text-align: center;
+}
+
+.who-we-are .principios {
+  margin-top: 54px;
+  margin-bottom: 51px;
+}
+
+.who-we-are .principios .principio .content {
+  font-family: Noto Sans;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.who-we-are .principios .principio .content .text {
+  margin-top: 8px;
+}
+
+.who-we-are .principios .principio .content .foot {
+  width: fit-content;
+  margin-top: 10px;
+  padding-top: 10px;
+  font-family: 'Noto Sans';
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 15px;
+  letter-spacing: 0em;
+  text-align: left;
+  border-top: 1px solid #e2e2e2;
+}
+
+.who-we-are .principios .acesse-comite {
+  height: 35px;
+  width: 169px;
+  border-radius: 2px;
+  background-color: #BC202B;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  font-family: Noto Sans;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 14px;
+  letter-spacing: 0em;
+  text-align: center;
+  color: white;
+  border: none !important;
+  margin-top: 41px;
+  cursor: pointer;
+}
+
+.who-we-are .contribua {
+  position: relative;
+  background-image: url(../images/backgrounds/who-we-are-mid-background.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 100%;
+  padding-top: 80px;
+  padding-bottom: 99px;
+}
+
+.who-we-are .contribua h4 {
+  font-family: Noto Sans;
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 35px;
+  letter-spacing: 0em;
+  color: white;
+}
+
+.who-we-are .contribua h5 {
+  font-family: Noto Sans;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: white;
+}
+
+.who-we-are .bottom {
+  margin-top: 69px;
+  margin-bottom: 87px;
+}
+
+.who-we-are .bottom .header {
+  margin-top: 15px;
+  padding-left: 10px;
+  padding-top: 7px;
+  padding-bottom: 9px;
+  width: 100%;
+  height: 35px;
+  color: white;
+  background-color: #BC202B;
+  font-family: 'Noto Serif';
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 19px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.who-we-are .banners {
+  margin-bottom: 22px;
+}
+
+@media only screen and (min-width: 600px) {
+  .who-we-are .employees .cards {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  .gamb-margin {
+    margin-left: 14%;
+    margin-right: 14%;
+  }
+
+  .who-we-are .employees .card-employee {
+    margin: 5px;
+  }
+}
+
+@media only screen and (max-width: 599px) {
+  .team .col-sm .employee {
+    width: 100%;
+  }
+
+  .who-we-are .employees .card-employee {
+    margin: 0 auto;
+  }
+  .who-we-are .employees {
+    padding-top: 31px;
+    padding-bottom: 31px;
+  }
+
+  .who-we-are .banners-box {
+    width: 100%;
+  }
+}
+
+.difuse {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+  top: 0;
+}

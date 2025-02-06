@@ -1,0 +1,139 @@
+/*Desktop*/
+section.parceiros {
+  margin-top: 100px;
+  padding-bottom: 100px;
+}
+section.parceiros .found-partners h5 {
+  font-family: "Noto Serif";
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.navbar-nav {
+  align-items: center;
+}
+
+.navbar-desktop .navParceiros {
+  background: #fafafa;
+  border-radius: 99px;
+  color: #bc222c !important;
+  font-family: "Noto Sans";
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px;
+  height: 24px;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.navbar-mobile .navParceiros {
+  color: #bc222c !important;
+}
+
+section.parceiros .card {
+  height: 261px;
+}
+
+section.parceiros .card .img {
+  padding: 10px 10px 0 10px;
+}
+
+section.parceiros .card img {
+  height: 123px;
+  border-radius: 2px;
+  object-fit: cover;
+}
+
+section.parceiros .card .card-body {
+  padding: 10px 10px 10px 10px !important;
+}
+
+section.parceiros .card .card-body .card-title {
+  font-family: "Noto Serif";
+  font-weight: 700;
+  font-size: 16px;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+section.parceiros .card .card-body .card-text {
+  font-family: "Noto Sans";
+  font-weight: 400;
+  font-size: 14px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/*Mobile*/
+
+section.parceiros_mobile {
+  margin-top: 100px;
+  background: url("../images/backgrounds/partners.svg");
+  background-size: cover;
+  min-height: 402px;
+}
+
+section.parceiros_mobile h5.title {
+  font-family: "Noto Serif";
+  font-weight: 500;
+  font-size: 16px;
+  color: #ea4d2b;
+}
+section.parceiros_mobile h5.count {
+  font-family: "Noto Serif";
+  font-weight: 700;
+  font-size: 12px;
+  color: #373737;
+}
+
+section.parceiros_mobile .partners_owl_mobile .item {
+  height: 261px;
+  /* width: 260px; */
+}
+
+section.parceiros_mobile .card {
+  width: 100%;
+  height: 100%;
+}
+
+section.parceiros_mobile .card .img {
+  padding: 10px 10px 0 10px;
+}
+
+section.parceiros_mobile .card img {
+  height: 123px;
+  border-radius: 2px;
+  object-fit: cover;
+}
+
+section.parceiros_mobile .card .card-body {
+  padding: 10px 10px 10px 10px !important;
+}
+
+section.parceiros_mobile .card .card-body .card-title {
+  font-family: "Noto Serif";
+  font-weight: 700;
+  font-size: 16px;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+section.parceiros_mobile .card .card-body .card-text {
+  font-family: "Noto Sans";
+  font-weight: 400;
+  font-size: 14px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

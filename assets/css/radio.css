@@ -1,0 +1,85 @@
+section.radio {
+  padding-top: 100px;
+  width: 100%;
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 1fr;
+  grid-column-gap: 19px;
+  grid-row-gap: 0px;
+}
+
+.navbar-nav {
+  align-items: center;
+}
+
+.navbar-desktop .navRadio {
+  background: #fafafa;
+  border-radius: 99px !important;
+  color: #bc222c !important;
+  font-family: "Noto Sans";
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px;
+  height: 24px;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.navbar-mobile .navRadio {
+  color: #bc222c !important;
+}
+
+@media only screen and (max-width: 998px) {
+  .wrapper {
+    all: unset;
+    display: block;
+  }
+  .btn.btn-play {
+    margin-bottom: 60px;
+  }
+  .img-radio {
+    height: 239px !important;
+  }
+  .gamb {
+    overflow: hidden !important;
+    position: unset !important;
+    width: unset !important;
+    top: unset !important;
+  }
+  .text {
+    margin-right: 6%;
+  }
+}
+
+.gamb {
+  position: absolute;
+  width: 100%;
+  top: 100px;
+}
+
+.img-radio {
+  width: 100%;
+  height: 425px;
+  object-fit: cover;
+}
+.text {
+  padding-top: 10%;
+  font-family: "Noto Sans";
+  font-weight: 400;
+  font-size: 12px;
+}
+
+.btn.btn-play {
+  margin-top: 20px;
+  background: #bc202b;
+  height: 45px;
+  border-radius: 2px;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 12px;
+  font-family: "Noto Sans";
+  width: 183px;
+}

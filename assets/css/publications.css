@@ -1,0 +1,160 @@
+section.publications {
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+
+.navbar-nav {
+  align-items: center;
+}
+
+.navbar-desktop .navPublicacoes {
+  background: #fafafa;
+  border-radius: 99px;
+  color: #bc222c !important;
+  font-family: Noto Sans;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px;
+  height: 24px;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.navbar-mobile .navPublicacoes {
+  color: #bc222c !important;
+}
+
+section.publications .filters {
+  min-height: 145px;
+  height: auto;
+  background-image: url("../images/backgrounds/filters.svg");
+  background-size: cover;
+}
+
+section.publications .filters input,
+section.publications .filters select {
+  border: 1px solid #b8b8b8;
+}
+
+section.publications .filters .padding-filters {
+  padding-right: 10%;
+  padding-left: 10%;
+}
+
+section.publications .filters label {
+  font-family: "Noto Sans";
+  font-weight: 400;
+  font-size: 12px;
+  color: #351515;
+}
+
+section.publications .filters .input-group-append .btn {
+  border: 1px solid #b8b8b8;
+  cursor: unset;
+}
+
+section.publications .filters .input-group-append .btn .fa.fa-search {
+  color: #939393;
+}
+
+section.publications .btn-filter {
+  font-family: 'Noto Sans';
+  font-weight: 400;
+  background-color: #d0d0d0;
+  border-radius: 99px;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  padding-left: 10px;
+  padding-right: 10px;
+  min-width: 53px;
+  height: 25px;
+  overflow: hidden;
+}
+
+section.publications .filters .form-inline .form-group input {
+  width: 59px;
+}
+
+section.publications .filters input::placeholder {
+  font-size: 12px;
+  font-family: "Noto Sans";
+}
+
+section.publications .card {
+  width: 100%;
+  height: 104px !important;
+  border: unset;
+}
+
+section.publications .card .img-top .tipo {
+  position: absolute;
+  right: 0;
+  bottom: 10px;
+  width: 73px;
+  height: 16px;
+  background: #bc222c;
+  border-radius: 2px 0px 0px 2px;
+  padding-left: 4px;
+  overflow: hidden;
+}
+
+section.publications .card .img-top .tipo p {
+  font-family: "Noto Serif";
+  font-size: 11px;
+  font-weight: 700;
+}
+
+section.publications .card .img-top img {
+  width: 100%;
+  height: 104px;
+  object-fit: cover;
+}
+
+section.publications .card .card-body {
+  padding-left: 7px;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+section.publications .card .card-body .category {
+  margin: 0;
+  font-family: "Noto Sans";
+  font-weight: 500;
+  font-size: 12px;
+  color: #737373;
+}
+section.publications .card .card-body .card-title {
+  font-family: "Noto Serif";
+  color: #373737;
+  font-weight: 700;
+  font-size: 14px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin: 0;
+}
+
+section.publications .card .card-body .author {
+  font-family: "Noto Serif";
+  font-weight: 500;
+  font-size: 10px;
+  color: #a8a8a8;
+}
+
+section.publications .card .card-body .card-text {
+  font-family: "Noto Sans";
+  font-weight: 400;
+  font-size: 12px;
+  color: #373737;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media only screen and (max-width: 768px) {
+  section.publications .filters .btn-category {
+    padding-bottom: 40px;
+  }
+}

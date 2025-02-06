@@ -1,0 +1,142 @@
+section.podcasts {
+  padding-top: 100px;
+}
+
+.navbar-nav {
+  align-items: center;
+}
+
+.navbar-desktop .navPodcasts {
+  background: #fafafa;
+  border-radius: 99px;
+  color: #bc222c !important;
+  font-family: Noto Sans;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px;
+  height: 24px;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.navbar-mobile .navPodcasts {
+  color: #bc222c !important;
+}
+
+section.podcasts .tabs-top {
+  height: 82px;
+  background-image: url("./../images/backgrounds/navbar.svg");
+  background-repeat: repeat;
+  background-size: cover;
+  background-color: #fff;
+}
+section.podcasts .tabs-top .nav {
+  padding-top: 42px;
+}
+
+section.podcasts .tabs-top .nav.nav-tabs {
+  border-bottom: unset;
+}
+
+section.podcasts .tabs-top .nav .nav-link {
+  font-family: "Noto Sans";
+  font-weight: 400;
+  color: #373737;
+  font-size: 14px;
+}
+
+section.podcasts .tabs-top .nav .nav-link.active {
+  background-color: unset !important;
+  font-weight: 700;
+  color: #373737;
+  border: unset;
+  border-color: unset !important;
+  border-bottom: 3px solid #a5a5a5 !important;
+}
+
+section.podcasts .filters {
+  min-height: 145px;
+  height: auto;
+  background-image: url("../images/backgrounds/filters.svg");
+  background-size: cover;
+}
+
+section.podcasts .filters input,
+section.podcasts .filters select {
+  border: 1px solid #b8b8b8;
+}
+
+section.podcasts .filters .padding-filters {
+  padding-right: 10%;
+  padding-left: 10%;
+}
+
+section.podcasts .filters label {
+  font-family: "Noto Sans";
+  font-weight: 400;
+  font-size: 12px;
+  color: #351515;
+}
+
+section.podcasts .filters .input-group-append .btn {
+  border: 1px solid #b8b8b8;
+  cursor: unset;
+}
+
+section.podcasts .filters .input-group-append .btn .fa.fa-search {
+  color: #939393;
+}
+
+section.podcasts .btn-filter {
+  background-color: #d0d0d0;
+  border-radius: 99px;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+section.podcasts .filters .form-inline .form-group input {
+  width: 59px;
+}
+
+section.podcasts .filters input::placeholder {
+  font-size: 12px;
+  font-family: "Noto Sans";
+}
+
+section.players-podcasts .wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  grid-column-gap: 15px;
+  grid-row-gap: 15px;
+}
+
+@media only screen and (max-width: 768px) {
+  section.players-podcasts .wrapper {
+    display: block;
+    grid-template-columns: unset;
+    grid-template-rows: unset;
+    grid-column-gap: unset;
+    grid-row-gap: unset;
+  }
+  section.players-podcasts .wrapper .player {
+    height: 150px !important;
+    margin-bottom: 35px !important;
+  }
+}
+
+section.players-podcasts .wrapper .player .name {
+  font-family: "Noto Sans";
+  font-size: 12px;
+  font-weight: 700;
+  color: #ea362b;
+}
+
+section.players-podcasts .wrapper .player .date {
+  font-family: "Noto Sans";
+  font-size: 12px;
+  font-weight: 400;
+  color: #8b8b8b;
+}

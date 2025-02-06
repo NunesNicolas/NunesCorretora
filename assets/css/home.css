@@ -1,0 +1,835 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;500;600;700;800;900&family=Roboto:wght@100;300;400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600;700;800;900&display=swap');
+
+.box,
+.box-left {
+  display: flex;
+  flex-direction: row;
+  align-content: space-between;
+}
+
+.box {
+  justify-content: space-between;
+}
+
+.box-left {
+  justify-content: left;
+}
+
+.box.head-section {
+  border-bottom: 1px solid #e2e2e2;
+}
+
+.box.head-section .section-title {
+  font-family: "Noto Serif";
+  font-weight: 700;
+  font-size: 16px;
+  color: #bc202b;
+  margin-bottom: 0;
+}
+
+.box.head-section .view-all {
+  font-family: "Noto Serif";
+  font-weight: 700;
+  font-size: 12px;
+  color: #bc202b;
+  text-decoration-line: underline;
+  margin-bottom: 0;
+}
+
+/* Campaign */
+section.campaign-home {
+  background-image: url("../images/backgrounds/campanha.png");
+  color: #000;
+  margin-top: 100px;
+  width: 100%;
+  overflow-x: hidden;
+  /*min-height: 100px;*/
+  background-repeat: repeat;
+  background-size: cover;
+  font-family: "Roboto Slab";
+}
+
+section.campaign-home .line {
+  height: fit-content;
+}
+
+section.campaign-home .wrapper {
+  background-color: #00000099;
+  height: 100%;
+  backdrop-filter: blur(5.5px);
+  -webkit-backdrop-filter: blur(5.5px);
+}
+
+section.campaign-home .wrapper .left-content {
+  display: flex;
+  flex-direction: column;
+  font-weight: 400;
+}
+
+section.campaign-home .wrapper .left-content h3 {
+  text-align: right;
+}
+
+section.campaign-home .wrapper .left-content p {
+  font-weight: 500;
+  text-align: right;
+}
+
+section.campaign-home .wrapper .right-content {
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 40px;
+}
+
+section.campaign-home .wrapper .right-content p {
+  font-weight: 400;
+}
+
+section.campaign-home .wrapper .right-content a {
+  text-decoration: none;
+}
+
+section.campaign-home .wrapper .right-content button {
+  height: fit-content;
+  background-color: #BC222C;
+  font-weight: 500;
+  color: #fff;
+  padding: 10px 15px;
+  border-radius: 4px;
+  border: none;
+  font-family: 'Inter';
+  margin-bottom: 15px;  
+}
+
+section.campaign-home .wrapper .right-content button:hover {
+  background-color: #b9464d;
+  transition: all .5s;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 768px) {
+  section.campaign-home {
+    height: 64px;
+  }
+
+  section.campaign-home .wrapper .left-content h3 {
+    font-size: 11px;
+  }
+
+  section.campaign-home .wrapper .left-content p {
+    font-size: 9px;
+  }
+
+  section.campaign-home .wrapper .left-content p img {
+    width: 44px;
+    height: fit-content;
+  }
+
+  section.campaign-home .wrapper .right-content a button {
+    font-size: 12px;
+    height: fit-content;    
+    font-weight: 500;
+    padding: 7px 10px;
+  }
+}
+
+/*Carousel Videos*/
+
+section.header_videos {
+  min-height: 400px;
+  padding-bottom: 20px;
+  height: auto;
+  background-image: url("../images/backgrounds/header_videos.svg");
+  background-repeat: repeat;
+  background-size: cover;
+}
+
+section.header_videos .carousel-youtube {
+  padding-top: 50px;
+}
+
+@media only screen and (max-width: 768px) {
+  section.header_videos .carousel-youtube {
+    padding-top: 25px !important;
+  }
+
+  section.header_videos .carousel-youtube iframe,
+  section.header_videos .carousel-youtube .thumb-big,
+  section.header_videos .carousel-youtube .thumb-big img {
+    height: 204px !important;
+  }
+
+  section.header_videos .carousel-youtube .thumb-big .btn-youtube {
+    top: 77px !important;
+  }
+}
+
+section.header_videos .carousel-youtube iframe {
+  height: 360px;
+}
+
+section.header_videos .snippet .title {
+  font-family: "Noto Serif";
+  font-size: 20px;
+  text-transform: capitalize;
+}
+
+section.header_videos .snippet .programa_name {
+  font-family: "Noto Sans";
+  color: #bc202b;
+  font-weight: 700;
+  font-size: 12px;
+}
+
+section.header_videos .snippet .tags {
+  font-family: "Noto Sans";
+  color: #c9c9c9;
+  font-weight: 700;
+  font-size: 12px;
+}
+
+section.header_videos .snippet .description {
+  font-family: "Noto Sans";
+  font-style: italic;
+  font-weight: 400;
+  font-size: 15px;
+}
+
+section.header_videos .dots {
+  margin-right: 10px;
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 1px solid #b4b4b4;
+}
+
+section.header_videos .dots-active {
+  background: #bc202b;
+  border: 1px solid #373737;
+}
+
+section.header_videos .button_cx1 {
+  margin-right: 10px;
+}
+
+section.header_videos .button_cx1,
+section.header_videos .button_cx2 {
+  background: #c9c9c9;
+  width: 24px;
+  height: 24px;
+  border: none;
+  color: white;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 600px) {
+  .position_btcx {
+    justify-content: center;
+  }
+}
+
+/*
+*
+* Section das Noticias
+*
+*/
+
+/* Destaque */
+
+section.last_publications .destaque .tipo {
+  position: absolute;
+  right: 0;
+  bottom: 175px;
+  width: 73px;
+  height: 16px;
+  background: #bc202b;
+  border-radius: 2px 0px 0px 2px;
+  padding-left: 4px;
+  overflow: hidden;
+  font-family: Noto Serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0em;
+  color: white;
+}
+
+.author {
+  font-family: Noto Serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 19px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #a8a8a8;
+}
+
+section.last_publications {
+  height: auto;
+}
+
+section.last_publications .banners {
+  margin-bottom: 62px;
+}
+
+section.last_publications .destaque .card {
+  height: 400;
+  border: 0 !important;
+}
+
+section.last_publications .destaque .card img {
+  height: 244px;
+}
+
+section.last_publications .destaque a {
+  all: unset;
+  cursor: pointer;
+}
+
+section.last_publications .destaque .card .card-body {
+  padding: 10px 0 0 0 !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+section.last_publications .destaque .card .card-body .card-title {
+  font-family: "Noto Serif";
+  color: #373737;
+  font-weight: 700;
+  font-size: 16px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+}
+
+section.last_publications .destaque .card .card-body .card-text {
+  font-family: "Noto Sans";
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+section.last_publications .destaque .card .card-body .category {
+  margin: 0;
+  font-family: "Noto Serif";
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 19px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #a8a8a8;
+}
+
+.owl-noticias-destaque .owl-nav {
+  position: absolute;
+  top: 100px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.owl-noticias-destaque .owl-dots {
+  text-align: left !important;
+}
+
+@media only screen and (max-width: 768px) {
+  .owl-noticias-destaque .owl-dots {
+    text-align: center !important;
+    position: relative;
+    top: -160px;
+  }
+
+}
+
+.owl-banners-home .owl-nav {
+  position: absolute;
+  top: 39%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.owl-banners-home .owl-nav button,
+.owl-noticias-destaque .owl-nav button {
+  width: 32px;
+  height: 32px;
+  background-color: rgba(0, 0, 0, 0.4) !important;
+  border: none;
+  border-radius: 0px !important;
+  margin: 0px !important;
+  position: relative;
+}
+
+.owl-banners-home .owl-nav button span,
+.owl-noticias-destaque .owl-nav button span {
+  content: none !important;
+  color: white !important;
+  font-size: 20px;
+  position: absolute;
+  top: 0px;
+  margin-top: -1px;
+  margin-left: -3px;
+}
+
+.owl-banners-home .owl-dots,
+.owl-noticias-destaque .owl-dots {
+  margin-top: 10px;
+}
+
+.owl-noticias-home .owl-dots {
+  padding-bottom: 50px !important;
+}
+
+
+.owl-banners-home .owl-dot span,
+.owl-noticias-destaque .owl-dot span {
+  background-color: white !important;
+  border: 1px solid #c4c4c4 !important;
+}
+
+.owl-banners-home .active span,
+.owl-noticias-destaque .active span {
+  background-color: #c4c4c4 !important;
+  border: 1px solid #c4c4c4 !important;
+}
+
+/*Normal */
+
+section.last_publications .news .tipo {
+  position: absolute;
+  right: 0;
+  bottom: 10px;
+  width: 73px;
+  height: 16px;
+  background: #bc202b;
+  border-radius: 2px 0px 0px 2px;
+  padding-left: 4px;
+  overflow: hidden;
+  font-family: 'Noto Serif';
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0em;
+  color: white;
+}
+
+section.last_publications .news .wrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(1, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+}
+
+section.last_publications .news a {
+  all: unset;
+  cursor: pointer;
+}
+
+section.last_publications .news.desktop .card,
+section.last_publications .news.shorts .card {
+  width: 100%;
+  height: 104px !important;
+  border: unset;
+}
+
+section.last_publications .news.desktop img {
+  width: 100%;
+  height: 104px;
+  object-fit: cover;
+}
+
+section.last_publications .news.desktop .card .card-body {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+section.last_publications .news .card .card-body .category,
+section.last_publications .news.shorts .card .card-body .category {
+  margin: 0;
+  font-family: "Noto Serif";
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 19px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #a8a8a8;
+}
+
+section.last_publications .news .card .card-body .card-title {
+  font-family: "Noto Serif";
+  color: #373737;
+  font-weight: 700;
+  font-size: 16px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin: 0;
+}
+
+section.last_publications .news .card .card-body .card-text {
+  font-family: "Noto Sans";
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Mobile */
+section.last_publications .news.mobile .card {
+  height: 104px !important;
+  border: unset;
+}
+
+section.last_publications .news.mobile .card {
+  height: auto !important;
+}
+
+section.last_publications .news.mobile .card img {
+  height: 104px !important;
+}
+
+section.last_publications .news.mobile .card .card-body {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+
+
+
+/*
+*
+* Section da newsletter
+*
+*/
+
+section.newsletter {
+  padding: 20px;
+  min-height: 126px;
+  height: auto;
+  background-image: url("../images/backgrounds/newsletter.svg");
+  background-repeat: repeat-y;
+  background-size: cover;
+}
+
+section.newsletter .title {
+  font-family: "Noto Serif";
+  font-size: 18px;
+  color: #bc202b;
+}
+
+section.newsletter .subtitle {
+  font-family: "Noto Sans";
+  font-weight: 700;
+  font-size: 14px;
+  color: #373737;
+}
+
+section.newsletter input {
+  background: #ffffff;
+  border: 1px solid #373737;
+  border-radius: 2px;
+}
+
+section.newsletter button {
+  font-family: "Noto Sans";
+  background: #bc202b;
+  border-radius: 2px;
+  font-size: 14px;
+  color: #ffffff;
+  width: 100%;
+}
+
+/*
+*
+* Section dos Videos
+*
+*/
+
+section.videos_home .videos_grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 1fr;
+  grid-column-gap: 30px;
+  grid-row-gap: 0px;
+}
+
+section.videos_home .videos_grid h5 {
+  font-family: "Noto Serif";
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/*
+*
+* Section dos Programas
+*
+*/
+
+section.program_home .bg-title {
+  height: 157px;
+  background-image: url("../images/backgrounds/programs.svg");
+  background-size: cover;
+}
+
+section.program_home .owl-stage {
+  padding-bottom: 15px;
+}
+
+section.program_home .title {
+  font-family: "Noto Serif";
+  font-weight: 500;
+  font-size: 20px;
+  color: #ffffff;
+}
+
+section.program_home .border-box {
+  position: relative;
+  top: -75px;
+  box-sizing: border-box;
+  min-height: 180px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  background-color: #fafafa;
+}
+
+section.program_home .programs-mobile-content {
+  position: relative;
+  top: -75px;
+}
+
+section.program_home .card {
+  background-color: transparent !important;
+  border: none !important;
+}
+
+section.program_home .mobile-box {
+  box-sizing: border-box;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  background-color: #fafafa !important;
+  height: 282px;
+  padding: 20px;
+}
+
+section.program_home .card .card-body {
+  padding: 0px;
+}
+
+section.program_home .card .card-title {
+  margin: 0px;
+}
+
+section.program_home .program-home-slider-right {
+  width: 47%;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-left: 1px solid #c7c7c7;
+  height: 180px;
+  padding-bottom: 45px;
+}
+
+section.program_home .program-home-slider-right .text {
+  height: 180px;
+  overflow-y: auto;
+}
+
+section.program_home .programs-mobile-content img {
+  width: 90px;
+  height: 90px;
+}
+
+section.program_home .programs-mobile-content .card-text {
+  margin-top: 20px;
+  height: 130px;
+  overflow-y: auto;
+}
+
+section.program_home .program-home-slider-right .text .card-text {
+  padding-right: 10px;
+}
+
+section.program_home .program-home-slider-right .text::-webkit-scrollbar {
+  width: 5px;
+}
+
+section.program_home .program-home-slider-right .text::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+}
+
+section.program_home .program-home-slider-right img {
+  width: 120px;
+  height: 120px;
+  margin-right: 20px;
+}
+
+section.program_home .align-sliders {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+section.program_home .program-home-slider-left {
+  width: 53%;
+  padding-left: 20px;
+  padding-right: 20px;
+  height: 100%;
+}
+
+/* section.program_home .program-home-slider-left .box-left-new {
+  display: grid !important;
+  grid-template-columns: repeat(6, 1fr);
+ 
+  grid-column-gap: 0px !important;
+} */
+
+section.program_home .program-home-slider-left img {
+  cursor: pointer;
+  max-width: 60px;
+  margin-right: 30px;
+}
+
+section.program_home .program-home-slider-left img:hover {
+  filter: grayscale(0%) !important;
+}
+
+section.program_home .img-slider-left {
+  filter: grayscale(100%);
+}
+
+.img-active {
+  filter: grayscale(0%) !important;
+}
+
+/*
+*
+* Section dos Podcasts
+*
+*/
+
+section.podcasts .wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  grid-column-gap: 15px;
+  grid-row-gap: 15px;
+}
+
+@media only screen and (max-width: 768px) {
+  section.podcasts .wrapper {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 15px;
+  }
+}
+
+/*
+*
+* Section dos Parceiros
+*
+*/
+
+section.partners {
+  min-height: 402px;
+  height: auto;
+  background-image: url("../images/backgrounds/partners.svg");
+  background-size: cover;
+}
+
+section.partners .title {
+  font-family: "Noto Serif";
+  font-size: 20px;
+  color: #bc202b;
+}
+
+section.partners .card-deck {
+  margin: 0 !important;
+}
+
+section.partners .card {
+  height: 261px;
+  padding: 10px;
+  width: 222px;
+}
+
+section.partners .card .card-img-top {
+  border-radius: 2px;
+  height: 123.75px;
+  object-fit: cover;
+}
+
+section.partners .card .card-body {
+  padding-top: 10px;
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-bottom: 0px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/*
+*
+* Section dos Parceiros Videos
+*
+*/
+
+section.videos_partners {
+  padding-bottom: 100px !important;
+}
+
+section.videos_partners_mobile {
+  padding-bottom: 100px !important;
+}
+
+section.videos_partners .video h5,
+section.videos_partners_mobile .owl-videos-partners h5 {
+  font-family: "Noto Serif";
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/** VIDEOS **/
+
+.thumb-youtube img {
+  width: 100%;
+  cursor: pointer;
+  border-radius: 2px !important;
+}
+
+.thumb-youtube iframe {
+  height: 123px;
+  border-radius: 2px !important;
+}
+
+.content-btn-youtube {
+  width: 100%;
+  position: absolute;
+}
+
+.btn-youtube {
+  filter: grayscale(100%);
+  width: 60px;
+  position: relative;
+  top: 38px;
+  content: url("../images/youtube-btn.png");
+  margin: 0 auto;
+  cursor: pointer;
+  opacity: 0.9;
+}
+
+.thumb-youtube:hover .btn-youtube {
+  filter: grayscale(0%);
+  opacity: 1;
+}

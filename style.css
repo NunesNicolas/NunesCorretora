@@ -1,61 +1,46 @@
-/*
-Theme Name: Twenty Twenty-Five
-Theme URI: https://wordpress.org/themes/twentytwentyfive/
-Author: the WordPress team
-Author URI: https://wordpress.org
-Description: Twenty Twenty-Five emphasizes simplicity and adaptability. It offers flexible design options, supported by a variety of patterns for different page types, such as services and landing pages, making it ideal for building personal blogs, professional portfolios, online magazines, or business websites. Its templates cater to various blog styles, from text-focused to image-heavy layouts. Additionally, it supports international typography and diverse color palettes, ensuring accessibility and customization for users worldwide.
-Requires at least: 6.7
-Tested up to: 6.7
-Requires PHP: 7.2
-Version: 1.0
-License: GNU General Public License v2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Text Domain: twentytwentyfive
-Tags: one-column, custom-colors, custom-menu, custom-logo, editor-style, featured-images, full-site-editing, block-patterns, rtl-language-support, sticky-post, threaded-comments, translation-ready, wide-blocks, block-styles, style-variations, accessibility-ready, blog, portfolio, news
-*/
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&family=Roboto:wght@100;300;400;500;700;900&display=swap');
 
-/*
- * Link styles
- * https://github.com/WordPress/gutenberg/issues/42319
- */
-a {
-	text-decoration-thickness: 1px !important;
-	text-underline-offset: .1em;
+* {
+    font-family: 'Roboto', 'Poppins', sans-serif;
 }
 
-/* Focus styles */
-:where(.wp-site-blocks *:focus) {
-	outline-width: 2px;
-	outline-style: solid;
+nav.navbar {
+    height: 100px;
+    background-color: #202020;
+    background-repeat: repeat;
+    background-size: cover;
 }
 
-/* Increase the bottom margin on submenus, so that the outline is visible. */
-.wp-block-navigation .wp-block-navigation-submenu .wp-block-navigation-item:not(:last-child) {
-	margin-bottom: 3px;
+nav .logo-header {
+    width: fit-content;
+    height: 80px;
 }
 
-/* Increase the outline offset on the parent menu items, so that the outline does not touch the text. */
-.wp-block-navigation .wp-block-navigation-item .wp-block-navigation-item__content {
-	outline-offset: 4px;
+nav.navbar .nav-item {
+    font-size: 14px;
+    font-weight: 400;
+    margin-left: 10px;
+    color: #fff;
 }
 
-/* Remove outline offset from the submenus, otherwise the outline is visible outside the submenu container. */
-.wp-block-navigation .wp-block-navigation-item ul.wp-block-navigation__submenu-container .wp-block-navigation-item__content {
-	outline-offset: 0;
+nav.navbar .nav-item:hover {
+    opacity: 0.5 !important;
 }
 
-/*
- * Progressive enhancement to reduce widows and orphans
- * https://github.com/WordPress/gutenberg/issues/55190
- */
-h1, h2, h3, h4, h5, h6, blockquote, caption, figcaption, p {
-	text-wrap: pretty;
+@media only screen and (max-width: 992px) {
+    nav.navbar .navbar-collapse {
+        z-index: 1;
+        position: relative;
+        width: 20%;
+        background-color: #373737;
+    }
+
+    nav.navbar .nav-item {
+        color: #373737;
+    }
 }
 
-/*
- * Change the position of the more block on the front, by making it a block level element.
- * https://github.com/WordPress/gutenberg/issues/65934
-*/
-.more-link {
-	display: block;
+
+nav.navbar .navbar-toggler .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0, 0, 0, 0.5)' stroke-width=' 2' stroke-linecap=' round' stroke-miterlimit=' 10' d=' M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
 }

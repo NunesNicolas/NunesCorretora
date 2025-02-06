@@ -1,0 +1,206 @@
+section.videos .filters {
+  min-height: 145px;
+  height: auto;
+  background-image: url("../images/backgrounds/filters.svg");
+  background-size: cover;
+}
+
+.navbar-nav {
+  align-items: center;
+}
+
+.navbar-desktop .navVideos {
+  background: #fafafa;
+  border-radius: 99px;
+  color: #bc222c !important;
+  font-family: "Noto Sans";
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px;
+  height: 24px;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.navbar-mobile .navVideos {
+  color: #bc222c !important;
+}
+
+section.videos .filters input,
+section.videos .filters select {
+  border: 1px solid #b8b8b8;
+}
+
+section.videos .filters .padding-filters {
+  padding-right: 10%;
+  padding-left: 10%;
+}
+
+section.videos .filters label {
+  font-family: "Noto Sans";
+  font-weight: 400;
+  font-size: 12px;
+  color: #351515;
+}
+
+section.videos .filters .input-group-append .btn {
+  border: 1px solid #b8b8b8;
+  cursor: unset;
+}
+
+section.videos .filters .input-group-append .btn .fa.fa-search {
+  color: #939393;
+}
+
+section.videos .btn-filter {
+  background-color: #d0d0d0;
+  border-radius: 99px;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+section.videos .filters .form-inline .form-group input {
+  width: 59px;
+}
+
+section.videos .filters input::placeholder {
+  font-size: 12px;
+  font-family: "Noto Sans";
+}
+
+section.videos {
+  margin-top: 100px;
+}
+
+section.videos .tabs-top {
+  height: 82px;
+  background-image: url("./../images/backgrounds/navbar.svg");
+  background-repeat: repeat;
+  background-size: cover;
+  background-color: #fff;
+}
+section.videos .tabs-top .nav {
+  padding-top: 42px;
+}
+
+section.videos .tabs-top .nav.nav-tabs {
+  border-bottom: unset;
+}
+
+section.videos .tabs-top .nav .nav-link {
+  font-family: "Noto Sans";
+  font-weight: 400;
+  color: #373737;
+  font-size: 14px;
+}
+
+section.videos .tabs-top .nav .nav-link.active {
+  background-color: unset !important;
+  font-weight: 700;
+  color: #373737;
+  border: unset;
+  border-color: unset !important;
+  border-bottom: 3px solid #a5a5a5 !important;
+}
+
+section.videos .tab-content {
+  height: auto;
+  width: 100%;
+}
+
+section.videos .tab-content .wrapper {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  grid-column-gap: 15px;
+  grid-row-gap: 15px;
+}
+
+@media only screen and (max-width: 768px) {
+  section.videos .tab-content .wrapper {
+    display: unset !important;
+    grid-template-columns: unset !important;
+    grid-template-rows: unset !important;
+    grid-column-gap: unset !important;
+    grid-row-gap: unset !important;
+  }
+  section.videos .tab-content .wrapper .card iframe {
+    height: 100% !important;
+  }
+  section.videos .tab-content .wrapper .card {
+    height: 250px !important;
+    margin-bottom: 30px;
+  }
+}
+
+section.videos .tab-content .wrapper .card {
+  height: 177px;
+  width: 100%;
+  overflow: hidden;
+  background-color: unset;
+  border: unset;
+}
+
+section.videos .tab-content .wrapper .card iframe {
+  height: 105px;
+}
+
+section.videos .tab-content .wrapper .card .details {
+  font-size: 10px;
+  font-family: "Noto Sans";
+}
+
+section.videos .tab-content .wrapper .card .details .program-name {
+  color: #ea362b;
+  font-weight: 700;
+}
+
+section.videos .tab-content .wrapper .card .details .date {
+  color: #8b8b8b;
+}
+
+section.videos .tab-content .wrapper .card .card-title {
+  font-family: "Noto Serif";
+  font-weight: 500;
+  font-size: 14px;
+  color: #373737;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.thumb-youtube img {
+  width: 100%;
+  cursor: pointer;
+  border-radius: 2px !important;
+}
+
+.thumb-youtube iframe {
+  height: 123px !important;
+  border-radius: 2px !important;
+}
+
+.content-btn-youtube {
+  width: 100%;
+  position: absolute;
+}
+
+.btn-youtube {
+  filter: grayscale(100%);
+  width: 60px;
+  position: relative;
+  top: 38px;
+  content: url("../images/youtube-btn.png");
+  margin: 0 auto;
+  cursor: pointer;
+  opacity: 0.9;
+}
+
+.thumb-youtube:hover .btn-youtube {
+  filter: grayscale(0%);
+  opacity: 1;
+}
