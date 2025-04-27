@@ -1,96 +1,168 @@
-<html>
+<!DOCTYPE html>
+<html <?php language_attributes(); ?>>
 
 <head>
-    <meta charset="UTF-8" />
-    <title>
-        <?php echo is_home() ? get_bloginfo('name') : get_the_title() . " | " . get_bloginfo('name') ?>
-    </title>
-    <meta name="title"
-        content="<?php echo is_home() ? get_bloginfo('name') : get_the_title() . " | " . get_bloginfo('name') ?>">
-    <meta name="description"
-        content="<?php echo is_home() ? get_bloginfo('description') : limitarTexto((wp_strip_all_tags(get_the_content())), 150); ?>">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="keywords" content="RED, estação democracia, democracia, red org, rede estação democracia">
-    <meta name="robots" content="index, follow">
-    <meta name="language" content="Portuguese">
-    <?php if (is_single() && 'noticia' == get_post_type()):
-        $description = limitarTexto(wp_strip_all_tags(get_the_content()), 150);
-        $thumbnail = has_post_thumbnail() ? get_the_post_thumbnail_url() : get_template_directory_uri() . '/assets/images/fake_thumb.jpg';
-        $details_img = getimagesize($thumbnail);
-        ?>
-        <!-- Open Graph Tags -->
-        <meta property="og:locale" content="pt_BR" />
-        <meta property="og:type" content="article" />
-        <meta property="og:description" content="<?php echo $description ?>" />
-        <meta property="og:image" content="<?php echo $thumbnail ?>" />
-        <meta property="og:image:width" content="<?php echo $details_img[0] ?>">
-        <meta property="og:image:height" content="<?php echo $details_img[1] ?>">
-        <meta property="og:image:type" content="<?php echo $details_img['mime'] ?>">
-        <meta property="og:title" content="<?php echo get_the_title() ?>" />
-        <meta property="og:site_name" content="<?php echo get_bloginfo('name') ?>">
-        <meta property="og:url" content="<?php echo get_permalink() ?>" />
-        <meta property="article:published_time" content="<?php echo get_the_date('Y-m-d\TH:i:s'); ?>" />
-        <meta property="article:modified_time" content="<?php echo get_the_modified_date('Y-m-d\TH:i:s'); ?>" />
-        <!-- Twitter -->
-        <meta name="twitter:title" content="<?php echo get_the_title() ?>">
-        <meta name="twitter:description" content="<?php echo $description ?>">
-        <meta name="twitter:image" content="<?php echo get_the_post_thumbnail_url() ?>">
-        <meta name="twitter:card" content="summary_large_image">
-        <!-- End Open Graph Tags -->
-    <?php endif; ?>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VBVKLF6SMN"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
+  <meta charset="<?php bloginfo('charset'); ?>">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><?php wp_title('|', true, 'right'); ?></title>
+  <style>
+    :root {
+      --primary-color: #f1e2a6;
+      --white-color: #ffffff;
+      --gray-color: #4a4a4a;
+      --light-gray: #f5f5f5;
+      --dark-gray: #333333;
+    }
 
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-        gtag('js', new Date());
-        gtag('config', 'G-VBVKLF6SMN');
-    </script>
-    <script src="https://www.youtube.com/iframe_api"></script>
-    <link rel="icon" type="image/png"
-        href="<?php echo get_template_directory_uri() . '/assets/images/icons/favicon.png' ?>" />
-    <?php wp_head(); ?>
-    <script>
-        const frontend_ajax_object = {
-            ajaxurl: '<?php echo admin_url('admin-ajax.php') ?>'
-        };
-    </script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2535916711277050"
-        crossorigin="anonymous"></script>
+    .bg-primary {
+      background-color: var(--primary-color) !important;
+    }
+
+    .bg-gray {
+      background-color: var(--gray-color) !important;
+    }
+
+    .text-primary {
+      color: var(--primary-color) !important;
+    }
+
+    .text-gray {
+      color: var(--gray-color) !important;
+    }
+
+    .btn-primary {
+      background-color: var(--gray-color);
+      border-color: var(--gray-color);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--dark-gray);
+      border-color: var(--dark-gray);
+    }
+
+    .btn-outline-primary {
+      color: var(--gray-color);
+      border-color: var(--gray-color);
+    }
+
+    .btn-outline-primary:hover {
+      background-color: var(--gray-color);
+      border-color: var(--gray-color);
+      color: white;
+    }
+
+    #main-header {
+      background-color: var(--gray-color);
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+    }
+
+    #logo-header {
+      max-height: 60px;
+    }
+
+    main.py-4 {
+      margin-top: 0;
+      padding-top: 0 !important;
+    }
+
+    .icon-box {
+      width: 70px;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .page-header {
+      background-color: var(--primary-color) !important;
+      color: var(--gray-color) !important;
+    }
+  </style>
+  <?php wp_head(); ?>
 </head>
 
-<nav class="navbar navbar-expand-lg fixed-top">
-    <div class="container">
-        <a class="navbar-brand" href="<?php echo get_site_url() ?>">
-            <img class="logo-header" src="<?php echo get_template_directory_uri() . '/assets/images/logo.png' ?>">
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse navbar-desktop justify-content-end" id="navbarNavAltMarkup">
-            <img class="arrow" src="<?php echo get_template_directory_uri() . '/assets/images/icons/arrow-top.svg' ?>"
-                style="display: none;" alt="flecha">
-            <div class="navbar-nav">
-                <a class="nav-item nav-link navProgramas text-capitalize" href="<?php echo get_site_url() . '/imoveis' ?>"
-                    id="programs-conditions">
-                    Imóveis
-                </a>
-                <a class="nav-item nav-link navVideos text-capitalize" href="<?php echo get_site_url() . '/informacoes' ?>">Informações</a>
-                <a class="nav-item nav-link navPodcasts text-capitalize" href="<?php echo get_site_url() . '/contato' ?>">Contato</a>
+<body <?php body_class(); ?>>
+  <?php wp_body_open(); ?>
+
+  <header class="site-header">
+    <div class="top-bar bg-primary text-white py-2 d-none d-md-block">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-md-6">
+            <div class="d-flex align-items-center">
+              <span class="me-3"><i
+                  class="fas fa-phone-alt me-2"></i><?php echo esc_html(get_option('regiane_phone', '(XX) XXXX-XXXX')); ?></span>
+              <span><i
+                  class="fas fa-envelope me-2"></i><?php echo esc_html(get_option('regiane_email', 'contato@exemplo.com')); ?></span>
             </div>
-            <span class="navbar-text text-white ms-md-5" id="gtranslate-languages">
-                <?php echo do_shortcode('[gtranslate]'); ?>
-            </span>
+          </div>
+          <div class="col-md-6 text-end">
+            <div class="social-icons">
+              <a href="https://www.instagram.com/regianenunescorretora/" class="text-white me-3" target="_blank">
+                <i class="fab fa-instagram"></i>
+              </a>
+              <a href="https://wa.me/<?php echo esc_html(get_option('regiane_phone', '5588999999999')); ?>?text=Olá%20Regiane,%20estou%20interessado%20em%20seus%20serviços"
+                class="text-white" target="_blank">
+                <i class="fab fa-whatsapp"></i>
+              </a>
+              <span class="ms-3 text-white-50"><i class="fas fa-id-card me-2"></i>CRECI 17.214</span>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
-</nav>
-<div class="background-menu"></div>
 
+    <nav class="navbar navbar-expand-lg navbar-light bg-white py-3 shadow-sm">
+      <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="<?php echo esc_url(home_url('/')); ?>">
+          <?php
+          $custom_logo_id = get_theme_mod('custom_logo');
+          if ($custom_logo_id) {
+            echo wp_get_attachment_image($custom_logo_id, 'full', false, array(
+              'class' => 'img-fluid',
+              'style' => 'max-height: 60px;',
+              'alt' => 'Regiane Nunes Corretora'
+            ));
+          } else {
+            echo '<h1 class="mb-0 text-primary">Regiane Nunes</h1>';
+          }
+          ?>
+        </a>
 
-<body>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <?php
+          if (has_nav_menu('primary')) {
+            wp_nav_menu(array(
+              'theme_location' => 'primary',
+              'depth' => 2,
+              'container' => false,
+              'menu_class' => 'navbar-nav ms-auto',
+              'fallback_cb' => 'WP_Bootstrap_Navwalker::fallback',
+              'walker' => new WP_Bootstrap_Navwalker()
+            ));
+          } else {
+            // Menu padrão temporário enquanto o usuário não configura um menu
+            echo '<ul class="navbar-nav ms-auto">';
+            echo '<li class="nav-item"><a href="' . esc_url(home_url('/')) . '" class="nav-link">Início</a></li>';
+            echo '<li class="nav-item"><a href="' . esc_url(home_url('/sobre')) . '" class="nav-link">Sobre</a></li>';
+            echo '<li class="nav-item"><a href="' . esc_url(home_url('/imoveis')) . '" class="nav-link">Imóveis</a></li>';
+            echo '</ul>';
+          }
+          ?>
+          <a href="https://wa.me/<?php echo esc_html(get_option('regiane_phone', '5588999999999')); ?>?text=Olá%20Regiane,%20estou%20interessado%20em%20seus%20serviços"
+            class="btn btn-primary ms-lg-3" target="_blank">
+            <i class="fab fa-whatsapp me-2"></i>Fale Comigo
+          </a>
+        </div>
+      </div>
+    </nav>
+  </header>
 
+  <div id="content" class="site-content">
+    <main class="py-4">
