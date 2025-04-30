@@ -3,12 +3,22 @@
     --primary: #312F2F;
     --secondary: #F1BE1B;
     --light: #FFFFFF;
+    --dark: #312F2F;
+    --warning: #F1BE1B;
+    --gray-100: #f8f9fa;
+    --gray-200: #e9ecef;
+    --gray-300: #dee2e6;
+    --gray-400: #ced4da;
+    --gray-500: #adb5bd;
+    --gray-600: #6c757d;
+    --gray-700: #495057;
+    --gray-800: #343a40;
+    --gray-900: #212529;
 }
 
 /* Base */
 body {
     font-family: 'Poppins', sans-serif;
-    padding-top: 80px;
     color: #333;
 }
 
@@ -60,34 +70,73 @@ body {
     margin-bottom: 40px;
 }
 
-/* Imóveis */
-.imovel-card {
-    margin-bottom: 30px;
-    border: 1px solid #eee;
-    border-radius: 5px;
+/* Página de detalhes do imóvel */
+.imovel-single-image {
+    position: relative;
     overflow: hidden;
-    transition: all 0.3s;
+    border-radius: 0.5rem;
 }
 
-.imovel-card:hover {
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    transform: translateY(-5px);
+.imovel-single-image img {
+    transition: transform 0.3s ease;
 }
 
-.imovel-card img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
+.imovel-single-image:hover img {
+    transform: scale(1.02);
 }
 
-.imovel-card .card-body {
-    padding: 20px;
+.imovel-content {
+    line-height: 1.8;
+    color: var(--gray-700);
 }
 
-.imovel-card .price {
-    color: var(--secondary);
+.imovel-content p {
+    margin-bottom: 1.5rem;
+}
+
+.price-box {
+    background: linear-gradient(135deg, var(--gray-100) 0%, var(--gray-200) 100%);
+    border: 1px solid var(--gray-200);
+}
+
+.price-box .price {
+    color: var(--primary);
     font-weight: 700;
+}
+
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+}
+
+.btn-warning {
+    background: var(--secondary);
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-warning:hover {
+    background: var(--secondary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(241, 190, 27, 0.3);
+}
+
+.list-group-item {
+    transition: background-color 0.3s ease;
+}
+
+.list-group-item:hover {
+    background-color: var(--gray-100);
+}
+
+.list-group-item i {
     font-size: 1.2rem;
+    width: 24px;
+    text-align: center;
 }
 
 /* Responsivo */
@@ -101,4 +150,99 @@ body {
     .navbar-nav {
         margin-bottom: 20px;
     }
+}
+
+/* Galeria de Imagens */
+.imovel-gallery {
+    margin-top: 2rem;
+}
+
+.gallery-item {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.gallery-item img {
+    transition: transform 0.3s ease;
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.gallery-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.gallery-item:hover img {
+    transform: scale(1.05);
+}
+
+/* Estilos do Modal */
+.modal-content {
+    background: transparent;
+    border: none;
+}
+
+.modal-body {
+    text-align: center;
+}
+
+.modal-body img {
+    max-height: 80vh;
+    object-fit: contain;
+}
+
+.btn-close {
+    background-color: #fff;
+    opacity: 1;
+    padding: 0.5rem;
+    margin: 0.5rem;
+}
+
+/* Estilos do Fancybox */
+.fancybox__container {
+    --fancybox-bg: rgba(0, 0, 0, 0.9);
+}
+
+.fancybox__nav {
+    --fancybox-nav-width: 44px;
+    --fancybox-nav-height: 44px;
+    --fancybox-nav-color: #fff;
+    --fancybox-nav-bg: rgba(241, 190, 27, 0.8);
+}
+
+.fancybox__nav:hover {
+    --fancybox-nav-bg: var(--secondary);
+}
+
+.fancybox__button {
+    --fancybox-color: #fff;
+    --fancybox-bg: rgba(241, 190, 27, 0.8);
+}
+
+.fancybox__button:hover {
+    --fancybox-bg: var(--secondary);
+}
+
+.fancybox__thumbs {
+    --fancybox-thumbs-width: 100px;
+    --fancybox-thumbs-height: 80px;
+    --fancybox-thumbs-gap: 8px;
+    --fancybox-thumbs-bg: rgba(0, 0, 0, 0.8);
+}
+
+.fancybox__thumb {
+    border-radius: 4px;
+    opacity: 0.6;
+    transition: all 0.3s ease;
+}
+
+.fancybox__thumb:hover,
+.fancybox__thumb.is-active {
+    opacity: 1;
+    border: 2px solid var(--secondary);
 }

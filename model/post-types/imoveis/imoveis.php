@@ -217,16 +217,6 @@ if (function_exists('acf_add_local_field_group')) {
         'default_value' => 0,
         'ui' => 1,
       ),
-      array(
-        'key' => 'field_galeria',
-        'label' => 'Galeria de Imagens',
-        'name' => 'galeria',
-        'type' => 'gallery',
-        'instructions' => 'Adicione imagens do imóvel',
-        'required' => 0,
-        'min' => '',
-        'max' => '',
-      ),
     ),
     'location' => array(
       array(
