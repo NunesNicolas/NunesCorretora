@@ -255,4 +255,48 @@ $is_destaque = get_post_meta(get_the_ID(), 'destaque', true);
 .imovel-card {
   animation: fadeInUp 0.5s ease forwards;
 }
+
+/* Garantir que todos os cards de imóveis tenham o mesmo tamanho */
+.imovel-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Garante que todos os cards tenham a mesma altura */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Ajustar a imagem para ter altura fixa */
+.imovel-card .card-img-top {
+  height: 200px; /* Define uma altura fixa para as imagens */
+  object-fit: cover; /* Garante que a imagem seja cortada proporcionalmente */
+  width: 100%; /* Garante que a imagem ocupe toda a largura do card */
+}
+
+/* Garantir que o conteúdo do card ocupe o restante do espaço */
+.imovel-card .card-body {
+  flex-grow: 1; /* Faz o conteúdo ocupar o espaço restante */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Botão de detalhes alinhado ao final */
+.imovel-card .btn-details {
+  margin-top: auto; /* Empurra o botão para o final do card */
+}
+/* Garantir que o texto do botão quebre em telas menores */
+.btn {
+  white-space: normal; /* Permite que o texto quebre em várias linhas */
+  word-wrap: break-word; /* Garante que palavras longas sejam quebradas */
+  text-align: center; /* Centraliza o texto no botão */
+}
+
+/* Ajustar o tamanho do botão em telas menores */
+@media (max-width: 576px) {
+  .btn {
+    font-size: 0.9rem; /* Reduz o tamanho da fonte em telas pequenas */
+    padding: 0.5rem 1rem; /* Ajusta o espaçamento interno do botão */
+  }
+}
 </style>
