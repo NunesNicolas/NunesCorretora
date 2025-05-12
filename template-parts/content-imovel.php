@@ -65,6 +65,13 @@ $is_destaque = get_post_meta(get_the_ID(), 'destaque', true);
           <span><?php echo $banheiros; ?></span>
         </div>
         <?php endif; ?>
+
+        <?php if ($garagem = get_post_meta(get_the_ID(), 'garagem', true)): ?>
+        <div class="feature-item">
+          <i class="fas fa-car"></i>
+          <span><?php echo $garagem; ?></span>
+        </div>
+        <?php endif; ?>
       </div>
 
       <a href="<?php the_permalink(); ?>" class="btn btn-details w-100">

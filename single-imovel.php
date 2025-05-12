@@ -89,6 +89,13 @@
             </li>
             <?php endif; ?>
 
+            <?php if ($garagem = get_post_meta(get_the_ID(), 'garagem', true)): ?>
+            <li class="list-group-item d-flex align-items-center border-0 py-3">
+              <i class="fas fa-car text-secondary mr-3"></i>
+              <span>vagas: <?php echo $garagem; ?></span>
+            </li>
+            <?php endif; ?>
+
             <?php if ($endereco = get_post_meta(get_the_ID(), 'endereco', true)): ?>
             <li class="list-group-item d-flex align-items-center border-0 py-3">
               <i class="fas fa-map-marker-alt text-secondary mr-3"></i>
