@@ -2,16 +2,18 @@
 /**
  * Template part para exibir os imóveis
  */
-function image_exists_imovel($file_path)
-{
-  // Usando o caminho do servidor em vez de file_exists
-  return @getimagesize($file_path) !== false;
+if (!function_exists('image_exists_imovel')) {
+    function image_exists_imovel($file_path)
+    {
+        // Usando o caminho do servidor em vez de file_exists
+        return @getimagesize($file_path) !== false;
+    }
 }
 
 $placeholder_image_path = get_template_directory() . '/assets/images/placeholder.jpg';
 $placeholder_image = image_exists_imovel($placeholder_image_path)
-  ? get_template_directory_uri() . '/assets/images/placeholder.jpg'
-  : 'https://via.placeholder.com/400x300?text=Imagem+não+disponível';
+    ? get_template_directory_uri() . '/assets/images/placeholder.jpg'
+    : 'https://via.placeholder.com/400x300?text=Imagem+não+disponível';
 
 // Verificar se é um imóvel em destaque
 $is_destaque = get_post_meta(get_the_ID(), 'destaque', true);
