@@ -7,23 +7,25 @@ get_header();
 
 if (have_posts()):
 ?>
-<style>
-  .btn-close {
-    position: relative;
-    background-color: transparent;
-    border: none;
-    color: #000; /* Cor do "X" */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+  <style>
+    .btn-close {
+      position: relative;
+      background-color: transparent;
+      border: none;
+      color: #000;
+      /* Cor do "X" */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-.btn-close::before {
-    content: "×"; /* Adiciona o "X" */
-    font-size: 1.5rem;
-    color: #000;
-}
-</style>
+    .btn-close::before {
+      content: "×";
+      /* Adiciona o "X" */
+      font-size: 1.5rem;
+      color: #000;
+    }
+  </style>
 
   <!-- Modal de Filtros -->
   <div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
@@ -127,5 +129,3 @@ endif;
 
 
 get_footer();
-
-

@@ -31,7 +31,7 @@
           <span class="bg-warning p-2 rounded mr-2">
             <i class="fas fa-envelope text-dark"></i>
           </span>
-          <?php echo esc_html(get_option('regiane_email', 'regiane@gmail.com')); ?>
+          <?php echo esc_html(get_option('regiane_email', 'regiane-nunes76@hotmail.com')); ?>
         </p>
         <p class="mb-0 d-flex align-items-center">
           <span class="bg-warning p-2 rounded mr-2">
@@ -79,7 +79,7 @@
         <a href="https://www.instagram.com/regianenunescorretora/" class="text-light mr-3" target="_blank">
           <i class="fab fa-instagram"></i>
         </a>
-        <a href="https://wa.me/<?php echo esc_html(get_option('regiane_phone', '5588999999999')); ?>?text=Olá%20Regiane,%20estou%20interessado%20em%20seus%20serviços"
+        <a href="https://wa.me/<?php echo esc_html(get_option('regiane_phone', '5588988779576')); ?>?text=Olá%20Regiane,%20estou%20interessado%20em%20seus%20serviços"
           class="text-light" target="_blank">
           <i class="fab fa-whatsapp"></i>
         </a>

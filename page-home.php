@@ -314,7 +314,7 @@ get_header();
           e agende uma visita.</p>
         <div class="contact-info">
           <p><i class="fas fa-phone-alt"></i> (88) 98877-9576</p>
-          <p><i class="fas fa-envelope"></i> <?php echo esc_html(get_option('regiane_email', 'regiane@gmail.com')); ?>
+          <p><i class="fas fa-envelope"></i> <?php echo esc_html(get_option('regiane_email', 'regiane-nunes76@hotmail.com ')); ?>
           </p>
           <p><i class="fas fa-map-marker-alt"></i>
             <?php echo esc_html(get_option('regiane_address', 'Endereço da Corretora')); ?></p>

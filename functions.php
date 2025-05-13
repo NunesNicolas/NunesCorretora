@@ -112,91 +112,93 @@ add_action('admin_menu', 'wpdocs_remove_menus');
  * Função para filtrar imóveis
  */
 
- function filtrar_imoveis() {
-     $args = array(
-         'post_type' => 'imovel',
-         'posts_per_page' => -1,
-         'meta_query' => array(), // Inicializa o meta_query
-     );
- 
-     // Filtro por tipo (aluguel ou venda) baseado na descrição
-     if (!empty($_POST['type'])) {
-         if ($_POST['type'] === 'aluguel') {
-             $args['s'] = 'locação';
-         } elseif ($_POST['type'] === 'compra') {
-             $args['s'] = 'venda';
-         }
-     }
- 
-     // Filtro por faixa de preço
-     if (!empty($_POST['price_min']) || !empty($_POST['price_max'])) {
-         $price_query = array(
-             'key' => 'preco',
-             'type' => 'NUMERIC',
-         );
- 
-         if (!empty($_POST['price_min']) && !empty($_POST['price_max'])) {
-             $price_query['value'] = array(intval($_POST['price_min']), intval($_POST['price_max']));
-             $price_query['compare'] = 'BETWEEN';
-         } elseif (!empty($_POST['price_min'])) {
-             $price_query['value'] = intval($_POST['price_min']);
-             $price_query['compare'] = '>=';
-         } elseif (!empty($_POST['price_max'])) {
-             $price_query['value'] = intval($_POST['price_max']);
-             $price_query['compare'] = '<=';
-         }
- 
-         $args['meta_query'][] = $price_query;
-     }
- 
-     // Filtro por número mínimo de banheiros
-     if (!empty($_POST['bathrooms_min'])) {
-         $args['meta_query'][] = array(
-             'key' => 'banheiros', // Substitua pelo nome do campo personalizado
-             'value' => intval($_POST['bathrooms_min']),
-             'type' => 'NUMERIC',
-             'compare' => '>='
-         );
-     }
- 
-     // Filtro por número mínimo de quartos
-     if (!empty($_POST['bedrooms_min'])) {
-         $args['meta_query'][] = array(
-             'key' => 'quartos', // Substitua pelo nome do campo personalizado
-             'value' => intval($_POST['bedrooms_min']),
-             'type' => 'NUMERIC',
-             'compare' => '>='
-         );
-     }
- 
-     // Filtro por número mínimo de vagas de garagem
-     if (!empty($_POST['garage_min'])) {
-         $args['meta_query'][] = array(
-             'key' => 'garagem', // Substitua pelo nome do campo personalizado
-             'value' => intval($_POST['garage_min']),
-             'type' => 'NUMERIC',
-             'compare' => '>='
-         );
-     }
- 
-     $query = new WP_Query($args);
- 
-     if ($query->have_posts()) {
-         ob_start();
-         while ($query->have_posts()) {
-             $query->the_post();
-             get_template_part('template-parts/content', 'imovel');
-         }
-         wp_reset_postdata();
-         wp_send_json_success(ob_get_clean());
-     } else {
-         wp_send_json_error('<p class="text-center">Nenhum imóvel encontrado.</p>');
-     }
- }
- add_action('wp_ajax_filtrar_imoveis', 'filtrar_imoveis');
- add_action('wp_ajax_nopriv_filtrar_imoveis', 'filtrar_imoveis');
+function filtrar_imoveis()
+{
+    $args = array(
+        'post_type' => 'imovel',
+        'posts_per_page' => -1,
+        'meta_query' => array(), // Inicializa o meta_query
+    );
 
-function registrar_scripts_filtro() {
+    // Filtro por tipo (aluguel ou venda) baseado na descrição
+    if (!empty($_POST['type'])) {
+        if ($_POST['type'] === 'aluguel') {
+            $args['s'] = 'locação';
+        } elseif ($_POST['type'] === 'compra') {
+            $args['s'] = 'venda';
+        }
+    }
+
+    // Filtro por faixa de preço
+    if (!empty($_POST['price_min']) || !empty($_POST['price_max'])) {
+        $price_query = array(
+            'key' => 'preco',
+            'type' => 'NUMERIC',
+        );
+
+        if (!empty($_POST['price_min']) && !empty($_POST['price_max'])) {
+            $price_query['value'] = array(intval($_POST['price_min']), intval($_POST['price_max']));
+            $price_query['compare'] = 'BETWEEN';
+        } elseif (!empty($_POST['price_min'])) {
+            $price_query['value'] = intval($_POST['price_min']);
+            $price_query['compare'] = '>=';
+        } elseif (!empty($_POST['price_max'])) {
+            $price_query['value'] = intval($_POST['price_max']);
+            $price_query['compare'] = '<=';
+        }
+
+        $args['meta_query'][] = $price_query;
+    }
+
+    // Filtro por número mínimo de banheiros
+    if (!empty($_POST['bathrooms_min'])) {
+        $args['meta_query'][] = array(
+            'key' => 'banheiros', // Substitua pelo nome do campo personalizado
+            'value' => intval($_POST['bathrooms_min']),
+            'type' => 'NUMERIC',
+            'compare' => '>='
+        );
+    }
+
+    // Filtro por número mínimo de quartos
+    if (!empty($_POST['bedrooms_min'])) {
+        $args['meta_query'][] = array(
+            'key' => 'quartos', // Substitua pelo nome do campo personalizado
+            'value' => intval($_POST['bedrooms_min']),
+            'type' => 'NUMERIC',
+            'compare' => '>='
+        );
+    }
+
+    // Filtro por número mínimo de vagas de garagem
+    if (!empty($_POST['garage_min'])) {
+        $args['meta_query'][] = array(
+            'key' => 'garagem', // Substitua pelo nome do campo personalizado
+            'value' => intval($_POST['garage_min']),
+            'type' => 'NUMERIC',
+            'compare' => '>='
+        );
+    }
+
+    $query = new WP_Query($args);
+
+    if ($query->have_posts()) {
+        ob_start();
+        while ($query->have_posts()) {
+            $query->the_post();
+            get_template_part('template-parts/content', 'imovel');
+        }
+        wp_reset_postdata();
+        wp_send_json_success(ob_get_clean());
+    } else {
+        wp_send_json_error('<p class="text-center">Nenhum imóvel encontrado.</p>');
+    }
+}
+add_action('wp_ajax_filtrar_imoveis', 'filtrar_imoveis');
+add_action('wp_ajax_nopriv_filtrar_imoveis', 'filtrar_imoveis');
+
+function registrar_scripts_filtro()
+{
     wp_enqueue_script('filters', get_template_directory_uri() . '/assets/js/filters.js', array('jquery'), null, true);
     wp_localize_script('filters', 'regiane_vars', array(
         'ajaxurl' => admin_url('admin-ajax.php'),

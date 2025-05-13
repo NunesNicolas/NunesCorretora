@@ -54,7 +54,7 @@ $client3_image = image_exists(get_template_directory() . '/assets/images/client3
           <a href="<?php echo esc_url(home_url('/imoveis')); ?>" class="btn btn-warning btn-lg px-4 mr-2 mb-2">
             <i class="fas fa-home mr-2"></i> Ver Imóveis
           </a>
-          <a href="https://wa.me/<?php echo esc_html(get_option('regiane_phone', '5588999999999')); ?>?text=Olá%20Regiane,%20estou%20interessado%20em%20seus%20serviços"
+          <a href="https://wa.me/<?php echo esc_html(get_option('regiane_phone', '5588988779576')); ?>?text=Olá%20Regiane,%20estou%20interessado%20em%20seus%20serviços"
             class="btn btn-outline-light btn-lg px-4 mb-2" target="_blank">
             <i class="fab fa-whatsapp mr-2"></i> Fale Comigo
           </a>
@@ -304,7 +304,7 @@ $client3_image = image_exists(get_template_directory() . '/assets/images/client3
       </div>
 
       <div class="col-12 text-center mt-4 animate__animated animate__fadeInUp">
-        <a href="https://wa.me/<?php echo esc_html(get_option('regiane_phone', '5588999999999')); ?>?text=Olá%20Regiane,%20gostaria%20de%20conhecer%20mais%20sobre%20seu%20trabalho"
+        <a href="https://wa.me/<?php echo esc_html(get_option('regiane_phone', '5588988779576')); ?>?text=Olá%20Regiane,%20gostaria%20de%20conhecer%20mais%20sobre%20seu%20trabalho"
           class="btn btn-warning btn-lg px-5 shadow-sm" target="_blank">
           <i class="fab fa-whatsapp mr-2"></i>Fale com a Regiane agora mesmo
         </a>
@@ -329,7 +329,7 @@ $client3_image = image_exists(get_template_directory() . '/assets/images/client3
             <i class="fas fa-phone-alt text-dark"></i>
           </span>
           <div>
-            <p class="mb-0"><?php echo esc_html(get_option('regiane_phone', '(XX) XXXX-XXXX')); ?></p>
+            <p class="mb-0"><?php echo esc_html(get_option('regiane_phone', '(88) 98877-9576')); ?></p>
           </div>
         </div>
 
@@ -338,7 +338,7 @@ $client3_image = image_exists(get_template_directory() . '/assets/images/client3
             <i class="fas fa-envelope text-dark"></i>
           </span>
           <div>
-            <p class="mb-0"><?php echo esc_html(get_option('regiane_email', 'regiane@gmail.com')); ?></p>
+            <p class="mb-0"><?php echo esc_html(get_option('regiane_email', 'regiane-nunes76@hotmail.com')); ?></p>
           </div>
         </div>
 
@@ -355,7 +355,7 @@ $client3_image = image_exists(get_template_directory() . '/assets/images/client3
           <a href="https://www.instagram.com/regianenunescorretora/" class="btn btn-light mr-2" target="_blank">
             <i class="fab fa-instagram"></i> Instagram
           </a>
-          <a href="https://wa.me/<?php echo esc_html(get_option('regiane_phone', '5588999999999')); ?>?text=Olá%20Regiane,%20estou%20interessado%20em%20seus%20serviços"
+          <a href="https://wa.me/<?php echo esc_html(get_option('regiane_phone', '5588988779576')); ?>?text=Olá%20Regiane,%20estou%20interessado%20em%20seus%20serviços"
             class="btn btn-light" target="_blank">
             <i class="fab fa-whatsapp"></i> WhatsApp
           </a>

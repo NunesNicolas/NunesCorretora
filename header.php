@@ -231,7 +231,7 @@
                 class="text-white text-decoration-none" target="_blank"><span class="mr-3"><i
                     class="fas fa-phone-alt mr-2"></i>(88) 98877-9576</span></a>
               <span><i
-                  class="fas fa-envelope mr-2"></i><?php echo esc_html(get_option('regiane_email', 'regiane@gmail.com')); ?></span>
+                  class="fas fa-envelope mr-2"></i><?php echo esc_html(get_option('regiane_email', 'regiane-nunes76@hotmail.com')); ?></span>
             </div>
           </div>
           <div class="col-md-6 d-flex justify-content-end">
@@ -259,7 +259,7 @@
 
 
 
-          
+
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -285,7 +285,7 @@
           <a href="https://wa.me/5588988779576?text=Olá%20Regiane,%20estou%20interessado%20em%20seus%20serviços"
             class="btn btn-whatsapp" target="_blank">
             <i class="fab fa-whatsapp mr-2"></i>Fale Comigo
-          </a>  
+          </a>
         </div>
       </div>
     </nav>
