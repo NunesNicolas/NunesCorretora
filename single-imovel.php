@@ -2,7 +2,7 @@
 
 <?php
 $descricao = get_the_content(); // Obtém o conteúdo da descrição
-$tem_aluguel = stripos($descricao, 'locação') !== false; // Verifica se a palavra "aluguel" está presente
+$tem_aluguel = get_post_meta(get_the_ID(), 'tipo_negocio', true) === 'aluguel'; // Verifica se a palavra "aluguel" está presente
 ?>
 
 <section class="container py-5">

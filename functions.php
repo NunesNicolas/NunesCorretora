@@ -114,20 +114,20 @@ add_action('admin_menu', 'wpdocs_remove_menus');
 
 function filtrar_imoveis()
 {
-    $args = array(
+    $args = array(  
         'post_type' => 'imovel',
         'posts_per_page' => -1,
         'meta_query' => array(), // Inicializa o meta_query
     );
 
-    // Filtro por tipo (aluguel ou venda) baseado na descrição
-    if (!empty($_POST['type'])) {
-        if ($_POST['type'] === 'aluguel') {
-            $args['s'] = 'locação';
-        } elseif ($_POST['type'] === 'compra') {
-            $args['s'] = 'venda';
-        }
-    }
+    // Filtro por tipo de negócio (aluguel ou venda) baseado no campo personalizado 'tipo_negocio'
+if (!empty($_POST['type'])) {
+    $args['meta_query'][] = array(
+        'key' => 'tipo_negocio', // Nome do campo personalizado
+        'value' => sanitize_text_field($_POST['type']), // Valor enviado pelo formulário
+        'compare' => '=', // Verifica igualdade
+    );
+}
 
     // Filtro por faixa de preço
     if (!empty($_POST['price_min']) || !empty($_POST['price_max'])) {

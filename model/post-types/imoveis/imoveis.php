@@ -217,6 +217,27 @@ if (function_exists('acf_add_local_field_group')) {
         'default_value' => 0,
         'ui' => 1,
       ),
+      array(
+        'key' => 'field_negocio_tipo',
+        'label' => 'Tipo de Negócio',
+        'name' => 'tipo_negocio',
+        'type' => 'select',
+        'instructions' => 'Selecione o tipo de negócio',
+        'required' => 1,
+        'choices' => array(
+          'venda' => 'Venda',
+          'aluguel' => 'Aluguel',
+        ),
+        'default_value' => array(),
+        'allow_null' => 0,
+        'multiple' => 0,
+        'ui' => 1,
+        'ajax' => 0,
+        'placeholder' => '',
+        'return_format' => 'value',
+        'multiple' => 0,
+        'conditional_logic' => 0,
+      ),
     ),
     'location' => array(
       array(

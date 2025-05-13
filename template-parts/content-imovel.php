@@ -21,7 +21,7 @@ $is_destaque = get_post_meta(get_the_ID(), 'destaque', true);
 
 // Verificar se a descrição contém a palavra "aluguel"
 $descricao = get_the_content();
-$tem_aluguel = stripos($descricao, 'locação') !== false;
+$tem_aluguel = get_post_meta(get_the_ID(), 'tipo_negocio', true) === 'aluguel';
 ?>
 
 <div class="col-md-4 mb-4">
