@@ -259,10 +259,7 @@
 
 
 
-          <a href="https://wa.me/5588988779576?text=Olá%20Regiane,%20estou%20interessado%20em%20seus%20serviços"
-            class="btn btn-whatsapp" target="_blank">
-            <i class="fab fa-whatsapp mr-2"></i>Fale Comigo
-          </a>
+          
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -284,6 +281,11 @@
               </li>
             </ul>
           </div>
+
+          <a href="https://wa.me/5588988779576?text=Olá%20Regiane,%20estou%20interessado%20em%20seus%20serviços"
+            class="btn btn-whatsapp" target="_blank">
+            <i class="fab fa-whatsapp mr-2"></i>Fale Comigo
+          </a>  
         </div>
       </div>
     </nav>
