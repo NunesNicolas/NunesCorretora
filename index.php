@@ -19,23 +19,19 @@ if (have_posts()):
         <div class="modal-body">
           <form id="filterForm">
             <div class="mb-3">
-              <label for="filterType" class="form-label">Tipo de Imóvel</label>
+              <label for="filterType" class="form-label">Tipo de Negócio</label>
               <select class="form-select" id="filterType" name="type">
                 <option value="">Todos</option>
-                <option value="casa">Casa</option>
-                <option value="apartamento">Apartamento</option>
-                <option value="terreno">Terreno</option>
+                <option value="aluguel">Aluguel</option>
+                <option value="compra">Compra</option>
               </select>
             </div>
             <div class="mb-3">
-              <label for="filterPrice" class="form-label">Faixa de Preço</label>
-              <select class="form-select" id="filterPrice" name="price">
-                <option value="">Todos</option>
-                <option value="0-100000">Até R$ 100.000</option>
-                <option value="100000-300000">R$ 100.000 - R$ 300.000</option>
-                <option value="300000-500000">R$ 300.000 - R$ 500.000</option>
-                <option value="500000+">Acima de R$ 500.000</option>
-              </select>
+              <label class="form-label">Faixa de Preço</label>
+              <div class="d-flex gap-2">
+                <input type="number" class="form-control" id="filterPriceMin" name="price_min" placeholder="Preço Mínimo" min="0">
+                <input type="number" class="form-control" id="filterPriceMax" name="price_max" placeholder="Preço Máximo" min="0">
+              </div>
             </div>
             <div class="mb-3">
               <label for="filterLocation" class="form-label">Localização</label>
@@ -57,7 +53,7 @@ if (have_posts()):
     <div>
  
 
-  <h1 class="text-center mb-2">Imóveis Disponíveis</h1>
+  <h1 class="text-center mb-2 ">Imóveis Disponíveis</h1>
   
   <div class="text-center mb-4">
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#filterModal">
