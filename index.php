@@ -61,14 +61,14 @@ if (have_posts()):
     </button>
   </div>
 
-  <div class="row">
+  <div class="row" id="content_posts">
     <?php   
       while (have_posts()):
         the_post();
         get_template_part('template-parts/content', get_post_type());
       endwhile;
-      ?>
-  </div>
+    ?>
+</div>
 
   <div class="mt-4">
     <?php

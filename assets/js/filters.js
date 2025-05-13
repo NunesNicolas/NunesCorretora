@@ -1,4 +1,39 @@
 jQuery(document).ready(function ($) {
+  $('#applyFilters').on('click', function (e) {
+      e.preventDefault();
+
+      // Capturar os dados do formulário
+      var formData = {
+          action: 'filtrar_imoveis',
+          type: $('#filterType').val(),
+          price_min: $('#filterPriceMin').val(),
+          price_max: $('#filterPriceMax').val(),
+          location: $('#filterLocation').val(),
+      };
+
+      // Enviar os dados via AJAX
+      $.ajax({
+          url: regiane_vars.ajaxurl, // Definido no `functions.php`
+          type: 'POST',
+          data: formData,
+          beforeSend: function () {
+              $('#content_posts').html('<p class="text-center">Carregando...</p>');
+          },
+          success: function (response) {
+              if (response.success) {
+                  $('#content_posts').html(response.data);
+              } else {
+                  $('#content_posts').html(response.data);
+              }
+          },
+          error: function () {
+              $('#content_posts').html('<p class="text-center">Erro ao carregar os imóveis.</p>');
+          },
+      });
+  });
+});
+
+jQuery(document).ready(function ($) {
   const arr = [];
   $(".btn-filter").click(function () {
     filter = $(this).data("filter");
