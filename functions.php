@@ -112,7 +112,6 @@ add_action('admin_menu', 'wpdocs_remove_menus');
  * Função para filtrar imóveis
  */
 
-
  function filtrar_imoveis() {
      $args = array(
          'post_type' => 'imovel',
@@ -120,16 +119,14 @@ add_action('admin_menu', 'wpdocs_remove_menus');
          'meta_query' => array(), // Inicializa o meta_query
      );
  
-    // Filtro por tipo (aluguel ou venda) baseado na descrição
-    if (!empty($_POST['type'])) {
-        if ($_POST['type'] === 'aluguel') {
-            // Busca imóveis que contenham "aluguel" na descrição
-            $args['s'] = 'locação';    
-        } elseif ($_POST['type'] === 'compra') {
-            // Busca imóveis que contenham "venda" na descrição
-            $args['s'] = 'venda';   
-        }
-    }
+     // Filtro por tipo (aluguel ou venda) baseado na descrição
+     if (!empty($_POST['type'])) {
+         if ($_POST['type'] === 'aluguel') {
+             $args['s'] = 'locação';
+         } elseif ($_POST['type'] === 'compra') {
+             $args['s'] = 'venda';
+         }
+     }
  
      // Filtro por faixa de preço
      if (!empty($_POST['price_min']) || !empty($_POST['price_max'])) {
@@ -152,12 +149,33 @@ add_action('admin_menu', 'wpdocs_remove_menus');
          $args['meta_query'][] = $price_query;
      }
  
-     // Filtro por localização
-     if (!empty($_POST['location'])) {
-         $args['tax_query'][] = array(
-             'taxonomy' => 'localizacao',
-             'field' => 'name',
-             'terms' => sanitize_text_field($_POST['location']),
+     // Filtro por número mínimo de banheiros
+     if (!empty($_POST['bathrooms_min'])) {
+         $args['meta_query'][] = array(
+             'key' => 'banheiros', // Substitua pelo nome do campo personalizado
+             'value' => intval($_POST['bathrooms_min']),
+             'type' => 'NUMERIC',
+             'compare' => '>='
+         );
+     }
+ 
+     // Filtro por número mínimo de quartos
+     if (!empty($_POST['bedrooms_min'])) {
+         $args['meta_query'][] = array(
+             'key' => 'quartos', // Substitua pelo nome do campo personalizado
+             'value' => intval($_POST['bedrooms_min']),
+             'type' => 'NUMERIC',
+             'compare' => '>='
+         );
+     }
+ 
+     // Filtro por número mínimo de vagas de garagem
+     if (!empty($_POST['garage_min'])) {
+         $args['meta_query'][] = array(
+             'key' => 'garagem', // Substitua pelo nome do campo personalizado
+             'value' => intval($_POST['garage_min']),
+             'type' => 'NUMERIC',
+             'compare' => '>='
          );
      }
  

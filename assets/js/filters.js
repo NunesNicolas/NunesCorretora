@@ -1,17 +1,17 @@
 jQuery(document).ready(function ($) {
-  $('#applyFilters').on('click', function (e) {
+  $('#filterForm').on('submit', function (e) {
       e.preventDefault();
 
-      // Capturar os dados do formulário
       var formData = {
           action: 'filtrar_imoveis',
           type: $('#filterType').val(),
           price_min: $('#filterPriceMin').val(),
           price_max: $('#filterPriceMax').val(),
-          location: $('#filterLocation').val(),
+          bathrooms_min: $('#bathroomsMin').val(),
+          bedrooms_min: $('#bedroomsMin').val(),
+          garage_min: $('#garageMin').val(),
       };
 
-      // Enviar os dados via AJAX
       $.ajax({
           url: regiane_vars.ajaxurl,
           type: 'POST',

@@ -38,11 +38,23 @@ if (have_posts()):
               <label for="filterLocation" class="form-label">Localização</label>
               <input type="text" class="form-control" id="filterLocation" name="location" placeholder="Digite a cidade ou bairro">
             </div>
+            <div class="mb-3">
+              <label for="bathroomsMin" class="form-label">Número mínimo de banheiros</label>
+              <input type="number" class="form-control" id="bathroomsMin" name="bathrooms_min" min="0" placeholder="Ex: 2">
+            </div>
+            <div class="mb-3">
+              <label for="bedroomsMin" class="form-label">Número mínimo de quartos</label>
+              <input type="number" class="form-control" id="bedroomsMin" name="bedrooms_min" min="0" placeholder="Ex: 3">
+            </div>
+            <div class="mb-3">
+              <label for="garageMin" class="form-label">Número mínimo de vagas de garagem</label>
+              <input type="number" class="form-control" id="garageMin" name="garage_min" min="0" placeholder="Ex: 1">
+            </div>
+            <button type="submit" class="btn btn-primary" id="applyFilters">Aplicar Filtros</button>
           </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-          <button type="button" class="btn btn-primary" id="applyFilters">Aplicar Filtros</button>
         </div>
       </div>
     </div>
