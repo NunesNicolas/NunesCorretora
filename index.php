@@ -7,7 +7,23 @@ get_header();
 
 if (have_posts()):
 ?>
+<style>
+  .btn-close {
+    position: relative;
+    background-color: transparent;
+    border: none;
+    color: #000; /* Cor do "X" */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
+.btn-close::before {
+    content: "×"; /* Adiciona o "X" */
+    font-size: 1.5rem;
+    color: #000;
+}
+</style>
 
   <!-- Modal de Filtros -->
   <div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
@@ -15,7 +31,9 @@ if (have_posts()):
       <div class="modal-content" style="background-color: white;">
         <div class="modal-header">
           <h5 class="modal-title" id="filterModalLabel">Filtrar Imóveis</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            <i class="bi bi-x-lg"></i>
+          </button>
         </div>
         <div class="modal-body">
           <form id="filterForm">
@@ -107,4 +125,7 @@ else:
   <?php
 endif;
 
+
 get_footer();
+
+
