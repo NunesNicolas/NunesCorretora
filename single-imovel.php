@@ -1,9 +1,27 @@
 <?php get_header(); ?>
 
 <?php
-$descricao = get_the_content(); // Obtém o conteúdo da descrição
-$tem_aluguel = get_post_meta(get_the_ID(), 'tipo_negocio', true) === 'aluguel'; // Verifica se a palavra "aluguel" está presente
+$descricao = get_the_content(); 
+$tem_aluguel = get_post_meta(get_the_ID(), 'tipo_negocio', true) === 'aluguel'; 
 ?>
+
+<style>
+.carousel-inner {
+  height: 40vh;
+  background-color: black;
+  display: flex;
+  align-items: center; /* Centraliza verticalmente o conteúdo */
+  justify-content: center;
+}
+
+.carousel-inner img {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+  object-position: center;  
+  background-color: black;
+}
+</style>
 
 <section class="container py-5">
   <div class="row">
@@ -15,54 +33,73 @@ $tem_aluguel = get_post_meta(get_the_ID(), 'tipo_negocio', true) === 'aluguel'; 
         <?php endif; ?>
       </h1>
 
-
-
-
-      <?php if (has_post_thumbnail()): ?>
-        <div class="imovel-single-image mb-4">
-          <img src="<?php the_post_thumbnail_url('imovel-single'); ?>" alt="<?php the_title(); ?>"
-            class="img-fluid rounded-3 shadow-sm">
-        </div>
-      <?php endif; ?>
-
-      <?php
-      // Galeria de imagens
-      $galeria = rwmb_meta('galeria_imagens', array('size' => 'imovel-thumb'));
-      if ($galeria): ?>
-        <div class="imovel-gallery mb-4">
-          <h3 class="h4 mb-3">Galeria de Imagens</h3>
-          <div class="row g-3">
+      <?php if ($galeria = rwmb_meta('galeria_imagens', array('size' => 'imovel-thumb'))): ?>
+        <div id="carouselExampleIndicators" class="carousel slide mb-4" data-bs-ride="carousel">
+          <ol class="carousel-indicators">
+            <?php 
+            $slide_index = 0; 
+            if (has_post_thumbnail()): ?>
+              <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"></li>
+              <?php $slide_index++; ?>
+            <?php endif; ?>
             <?php foreach ($galeria as $index => $imagem): ?>
-              <div class="col-md-4">
-                <a href="#" class="gallery-item" data-bs-toggle="modal" data-bs-target="#galleryModal<?php echo $index; ?>">
-                  <img src="<?php echo esc_url($imagem['url']); ?>" alt="<?php echo esc_attr($imagem['alt']); ?>"
-                    class="img-fluid rounded-3 shadow-sm">
-                </a>
+              <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<?php echo $slide_index; ?>" class=""></li>
+              <?php $slide_index++; ?>
+            <?php endforeach; ?>
+          </ol>
+          <div class="carousel-inner">
+            <!-- Primeira imagem: Imagem destacada -->
+            <?php if (has_post_thumbnail()): ?>
+              <div class="carousel-item active">
+                <img class="d-block w-100" src="<?php echo esc_url(get_the_post_thumbnail_url(get_the_ID(), 'imovel-single')); ?>" alt="<?php the_title(); ?>" data-bs-toggle="modal" data-bs-target="#imageModal" data-bs-image="<?php echo esc_url(get_the_post_thumbnail_url(get_the_ID(), 'full')); ?>">
+              </div>
+            <?php endif; ?>
+
+            <!-- Demais imagens da galeria -->
+            <?php foreach ($galeria as $index => $imagem): ?>
+              <div class="carousel-item">
+                <img class="d-block w-100" src="<?php echo esc_url($imagem['url']); ?>" alt="<?php echo esc_attr($imagem['alt']); ?>" data-bs-toggle="modal" data-bs-target="#imageModal" data-bs-image="<?php echo esc_url($imagem['url']); ?>">
               </div>
             <?php endforeach; ?>
           </div>
+          <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Anterior</span>
+          </a>
+          <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Próximo</span>
+          </a>
         </div>
+      <?php endif; ?>
 
-        <!-- Modais para cada imagem -->
-        <?php foreach ($galeria as $index => $imagem): ?>
-          <div class="modal fade" id="galleryModal<?php echo $index; ?>" tabindex="-1"
-            aria-labelledby="galleryModalLabel<?php echo $index; ?>" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
-              <div class="modal-content">
-                <div class="modal-header border-0">
-                  <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Fechar">
-                    <i class="fas fa-times text-secondary"></i>
-                  </button>
-                </div>
-                <div class="modal-body p-0">
-                  <img src="<?php echo esc_url($imagem['full_url']); ?>" alt="<?php echo esc_attr($imagem['alt']); ?>"
-                    class="img-fluid w-100">
-                </div>
-              </div>
+      <!-- Modal -->
+      <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+          <div class="modal-content">
+            <div class="modal-body p-0">
+              <img id="modalImage" src="" class="img-fluid w-100" alt="Imagem ampliada">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
             </div>
           </div>
-        <?php endforeach; ?>
-      <?php endif; ?>
+        </div>
+      </div>
+
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          const modalImage = document.getElementById('modalImage');
+          const carouselImages = document.querySelectorAll('.carousel-item img');
+
+          carouselImages.forEach(image => {
+            image.addEventListener('click', function () {
+              const imageUrl = this.getAttribute('data-bs-image');
+              modalImage.setAttribute('src', imageUrl);
+            });
+          });
+        });
+      </script>
 
       <div class="imovel-content mb-4 p-4 bg-light rounded shadow-sm">
         <h2 class="h4 mb-3 text-secondary">Descrição do Imóvel</h2>
@@ -132,4 +169,4 @@ $tem_aluguel = get_post_meta(get_the_ID(), 'tipo_negocio', true) === 'aluguel'; 
   </div>
 </section>
 
-<?php get_footer(); ?>
+<?php get_footer(); ?>  
