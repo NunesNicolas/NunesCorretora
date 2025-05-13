@@ -13,7 +13,7 @@ jQuery(document).ready(function ($) {
 
       // Enviar os dados via AJAX
       $.ajax({
-          url: regiane_vars.ajaxurl, // Definido no `functions.php`
+          url: regiane_vars.ajaxurl,
           type: 'POST',
           data: formData,
           beforeSend: function () {

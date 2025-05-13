@@ -1,11 +1,12 @@
 <?php
+
 /**
  * Arquivo principal do tema
  */
 get_header();
 
 if (have_posts()):
-  ?>
+?>
 
 
   <!-- Modal de Filtros -->
@@ -48,50 +49,50 @@ if (have_posts()):
   </div>
 
 
-<div class="container py-5">
-   <!-- Botão de Filtro -->
+  <div class="container py-5">
+    <!-- Botão de Filtro -->
     <div>
- 
 
-  <h1 class="text-center mb-2 ">Imóveis Disponíveis</h1>
-  
-  <div class="text-center mb-4">
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#filterModal">
-      Filtrar Imóveis
-    </button>
-  </div>
 
-  <div class="row" id="content_posts">
-    <?php   
-      while (have_posts()):
-        the_post();
-        get_template_part('template-parts/content', get_post_type());
-      endwhile;
-    ?>
-</div>
+      <h1 class="text-center mb-2 ">Imóveis Disponíveis</h1>
 
-  <div class="mt-4">
-    <?php
-      the_posts_pagination(array(
-        'prev_text' => '&laquo; Anterior',
-        'next_text' => 'Próximo &raquo;',
-      ));
-      ?>
-  </div>
-</div>
-<?php
+      <div class="text-center mb-4">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#filterModal">
+          Filtrar Imóveis
+        </button>
+      </div>
+
+      <div class="row" id="content_posts">
+        <?php
+        while (have_posts()):
+          the_post();
+          get_template_part('template-parts/content', get_post_type());
+        endwhile;
+        ?>
+      </div>
+
+      <div class="mt-4">
+        <?php
+        the_posts_pagination(array(
+          'prev_text' => '&laquo; Anterior',
+          'next_text' => 'Próximo &raquo;',
+        ));
+        ?>
+      </div>
+    </div>
+  <?php
 else:
   ?>
-<div class="container py-5">
-  <div class="row">
-    <div class="col-12 text-center">
-      <h2>Nenhum conteúdo encontrado</h2>
-      <p>Não foi possível encontrar o conteúdo que você está procurando.</p>
-      <a href="<?php echo esc_url(home_url('/')); ?>" class="btn btn-primary">Voltar à página inicial</a>
+    <div class="container py-5">
+      <div class="row">
+        <div class="col-12 text-center">
+          <h2>Nenhum conteúdo encontrado</h2>
+          <p>Não foi possível encontrar o conteúdo que você está procurando.</p>
+          <a href="<?php echo esc_url(home_url('/')); ?>" class="btn btn-primary">Voltar à página inicial</a>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-<?php
+  <?php
 endif;
 
 get_footer();

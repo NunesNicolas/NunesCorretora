@@ -111,81 +111,80 @@ add_action('admin_menu', 'wpdocs_remove_menus');
 /**
  * Função para filtrar imóveis
  */
-function filtrar_imoveis()
-{
-    $args = array(
-        'post_type' => 'imovel',
-        'posts_per_page' => -1,
-    );
 
-    // Filtro por tipo (aluguel ou compra)
+
+ function filtrar_imoveis() {
+     $args = array(
+         'post_type' => 'imovel',
+         'posts_per_page' => -1,
+         'meta_query' => array(), // Inicializa o meta_query
+     );
+ 
+    // Filtro por tipo (aluguel ou venda) baseado na descrição
     if (!empty($_POST['type'])) {
-        $args['meta_query'][] = array(
-            'key' => 'tipo_negocio', // Substitua pelo nome correto do campo personalizado
-            'value' => sanitize_text_field($_POST['type']),
-            'compare' => '='
-        );
-    }
-
-    // Filtro por faixa de preço
-    if (!empty($_POST['price_min']) || !empty($_POST['price_max'])) {
-        $price_query = array(
-            'key' => 'preco',
-            'type' => 'NUMERIC',
-        );
-
-        if (!empty($_POST['price_min']) && !empty($_POST['price_max'])) {
-            // Quando ambos os valores são fornecidos, use BETWEEN
-            $price_query['value'] = array(intval($_POST['price_min']), intval($_POST['price_max']));
-            $price_query['compare'] = 'BETWEEN';
-        } elseif (!empty($_POST['price_min'])) {
-            // Apenas preço mínimo
-            $price_query['value'] = intval($_POST['price_min']);
-            $price_query['compare'] = '>=';
-        } elseif (!empty($_POST['price_max'])) {
-            // Apenas preço máximo
-            $price_query['value'] = intval($_POST['price_max']);
-            $price_query['compare'] = '<=';
+        if ($_POST['type'] === 'aluguel') {
+            // Busca imóveis que contenham "aluguel" na descrição
+            $args['s'] = 'locação';    
+        } elseif ($_POST['type'] === 'compra') {
+            // Busca imóveis que contenham "venda" na descrição
+            $args['s'] = 'venda';   
         }
-
-        $args['meta_query'][] = $price_query;
     }
+ 
+     // Filtro por faixa de preço
+     if (!empty($_POST['price_min']) || !empty($_POST['price_max'])) {
+         $price_query = array(
+             'key' => 'preco',
+             'type' => 'NUMERIC',
+         );
+ 
+         if (!empty($_POST['price_min']) && !empty($_POST['price_max'])) {
+             $price_query['value'] = array(intval($_POST['price_min']), intval($_POST['price_max']));
+             $price_query['compare'] = 'BETWEEN';
+         } elseif (!empty($_POST['price_min'])) {
+             $price_query['value'] = intval($_POST['price_min']);
+             $price_query['compare'] = '>=';
+         } elseif (!empty($_POST['price_max'])) {
+             $price_query['value'] = intval($_POST['price_max']);
+             $price_query['compare'] = '<=';
+         }
+ 
+         $args['meta_query'][] = $price_query;
+     }
+ 
+     // Filtro por localização
+     if (!empty($_POST['location'])) {
+         $args['tax_query'][] = array(
+             'taxonomy' => 'localizacao',
+             'field' => 'name',
+             'terms' => sanitize_text_field($_POST['location']),
+         );
+     }
+ 
+     $query = new WP_Query($args);
+ 
+     if ($query->have_posts()) {
+         ob_start();
+         while ($query->have_posts()) {
+             $query->the_post();
+             get_template_part('template-parts/content', 'imovel');
+         }
+         wp_reset_postdata();
+         wp_send_json_success(ob_get_clean());
+     } else {
+         wp_send_json_error('<p class="text-center">Nenhum imóvel encontrado.</p>');
+     }
+ }
+ add_action('wp_ajax_filtrar_imoveis', 'filtrar_imoveis');
+ add_action('wp_ajax_nopriv_filtrar_imoveis', 'filtrar_imoveis');
 
-    // Filtro por localização
-    if (!empty($_POST['location'])) {
-        $args['tax_query'][] = array(
-            'taxonomy' => 'localizacao', // Substitua pelo nome correto da taxonomia
-            'field' => 'name',
-            'terms' => sanitize_text_field($_POST['location']),
-        );
-    }
-
-    $query = new WP_Query($args);
-
-    if ($query->have_posts()) {
-        ob_start();
-        while ($query->have_posts()) {
-            $query->the_post();
-            get_template_part('template-parts/content', 'imovel');
-        }
-        wp_reset_postdata();
-        wp_send_json_success(ob_get_clean());
-    } else {
-        wp_send_json_error('<p class="text-center">Nenhum imóvel encontrado.</p>');
-    }
-}
-add_action('wp_ajax_filtrar_imoveis', 'filtrar_imoveis');
-add_action('wp_ajax_nopriv_filtrar_imoveis', 'filtrar_imoveis');
-
-function registrar_scripts_filtro()
-{
+function registrar_scripts_filtro() {
     wp_enqueue_script('filters', get_template_directory_uri() . '/assets/js/filters.js', array('jquery'), null, true);
     wp_localize_script('filters', 'regiane_vars', array(
         'ajaxurl' => admin_url('admin-ajax.php'),
     ));
 }
 add_action('wp_enqueue_scripts', 'registrar_scripts_filtro');
-
 
 /**
  * Tamanhos de imagem customizados
