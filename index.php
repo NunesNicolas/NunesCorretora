@@ -44,7 +44,7 @@ if (have_posts()):
               <select class="form-select" id="filterType" name="type">
                 <option value="">Todos</option>
                 <option value="aluguel">Aluguel</option>
-                <option value="compra">Compra</option>
+                <option value="venda">Compra</option>
               </select>
             </div>
             <div class="mb-3">

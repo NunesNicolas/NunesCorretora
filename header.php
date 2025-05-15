@@ -113,6 +113,7 @@
     .navbar-nav {
       gap: 2.5rem;
       margin-right: 3rem;
+      padding: 0.5rem 0;
     }
 
     .navbar-nav .nav-link {
@@ -214,6 +215,36 @@
         margin-top: 1rem;
       }
     }
+
+      @media (max-width: 991.98px) {
+      .navbar-container {
+        flex-direction: row !important;
+        align-items: center !important;
+      }
+      .navbar-brand {
+        margin-bottom: 0 !important;
+        margin-right: 0.5rem !important;
+      }
+      .navbar-toggler {
+        margin-left: 0 !important;
+      }
+       .navbar-collapse {
+    padding: 1rem 1.2rem;
+  }
+  .navbar-nav {
+    padding: 1rem 0.5rem;
+    border-radius: 8px;
+  }
+  .nav-item {
+     width: 90%;
+    margin-left: 5%;
+  }
+  .btn-whatsapp {
+    width: 90%;
+    margin-left: 5%;
+
+  }
+      }
   </style>
   <?php wp_head(); ?>
 </head>
@@ -251,42 +282,35 @@
     </div>
 
     <nav class="navbar navbar-expand-lg navbar-light">
-      <div class="container">
-        <div class="d-flex justify-content-between align-items-center w-100">
-          <a class="navbar-brand" href="<?php echo esc_url(home_url('/')); ?>">
-            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo.png" alt="Regiane Nunes Corretora">
-          </a>
+      <div class="container navbar-container">
+      <a class="navbar-brand d-flex align-items-center" href="<?php echo esc_url(home_url('/')); ?>">
+        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo.png" alt="Regiane Nunes Corretora">
+      </a>
+      <button class="navbar-toggler ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-
-
-
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-
-          <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link <?php echo is_front_page() ? 'active' : ''; ?>"
-                  href="<?php echo esc_url(home_url('/')); ?>">Início</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link <?php echo is_page('sobre') ? 'active' : ''; ?>"
-                  href="<?php echo esc_url(home_url('/sobre')); ?>">Sobre Nós</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link <?php echo is_page('imoveis') ? 'active' : ''; ?>"
-                  href="<?php echo esc_url(home_url('/imoveis')); ?>">Imóveis</a>
-              </li>
-            </ul>
-          </div>
-
-          <a href="https://wa.me/5588988779576?text=Olá%20Regiane,%20estou%20interessado%20em%20seus%20serviços"
-            class="btn btn-whatsapp" target="_blank">
-            <i class="fab fa-whatsapp mr-2"></i>Fale Comigo
-          </a>
-        </div>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link <?php echo is_front_page() ? 'active' : ''; ?>"
+          href="<?php echo esc_url(home_url('/')); ?>">Início</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link <?php echo is_page('sobre') ? 'active' : ''; ?>"
+          href="<?php echo esc_url(home_url('/sobre')); ?>">Sobre Nós</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link <?php echo is_page('imoveis') ? 'active' : ''; ?>"
+          href="<?php echo esc_url(home_url('/imoveis')); ?>">Imóveis</a>
+        </li>
+        </ul>
+        <a href="https://wa.me/5588988779576?text=Olá%20Regiane,%20estou%20interessado%20em%20seus%20serviços"
+        class="btn btn-whatsapp ms-lg-3 mt-3 mt-lg-0" target="_blank">
+        <i class="fab fa-whatsapp mr-2"></i>Fale Comigo
+        </a>
+      </div>
       </div>
     </nav>
   </header>

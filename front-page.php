@@ -305,8 +305,9 @@ $client3_image = image_exists(get_template_directory() . '/assets/images/client3
 
       <div class="col-12 text-center mt-4 animate__animated animate__fadeInUp">
         <a href="https://wa.me/<?php echo esc_html(get_option('regiane_phone', '5588988779576')); ?>?text=Olá%20Regiane,%20gostaria%20de%20conhecer%20mais%20sobre%20seu%20trabalho"
-          class="btn btn-warning btn-lg px-5 shadow-sm" target="_blank">
-          <i class="fab fa-whatsapp mr-2"></i>Fale com a Regiane agora mesmo
+          class="btn btn-warning btn-lg px-5 shadow-sm d-inline-block text-break" target="_blank" style="white-space: normal;">
+          <i class="fab fa-whatsapp mr-2"></i>
+          Fale com a Regiane agora mesmo
         </a>
       </div>
     </div>
