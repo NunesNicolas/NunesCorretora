@@ -10,8 +10,8 @@ jQuery(document).ready(function ($) {
           bathrooms_min: $('#bathroomsMin').val(),
           bedrooms_min: $('#bedroomsMin').val(),
           garage_min: $('#garageMin').val(),
+          location: $('#filterLocation').val(),
       };
-
       $.ajax({
           url: regiane_vars.ajaxurl,
           type: 'POST',
@@ -49,6 +49,7 @@ jQuery(document).ready(function ($) {
 
   $("#filters-publications").change(function (event) {
     event.preventDefault();
+    console.log('FormData:', formData);
     $.ajax({
       type: "POST",
       url: frontend_ajax_object.ajaxurl,

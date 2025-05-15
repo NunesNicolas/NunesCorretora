@@ -72,10 +72,7 @@ if (have_posts()):
             </div>
             <button type="submit" class="btn btn-primary" id="applyFilters">Aplicar Filtros</button>
           </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-        </div>
+        </div>  
       </div>
     </div>
   </div>

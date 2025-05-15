@@ -358,23 +358,19 @@ function liked(event) {
   }
 }
 
-// POP-UP
 document.addEventListener("DOMContentLoaded", function () {
   const popup = document.querySelector(".popup");
 
-  // Verificar se o pop-up já foi exibido antes
-  if (!sessionStorage.getItem("popupShown")) {
+  if (popup && !sessionStorage.getItem("popupShown")) {
     popup.style.display = "block";
-
-    // Definir um item no localStorage para indicar que o pop-up já foi exibido
     sessionStorage.setItem("popupShown", true);
   }
 
-  // Fechar o pop-up ao clicar na imagem ou no botão de fechar
   document.addEventListener("click", function (event) {
     if (
-      event.target.classList.contains("close-button") ||
-      event.target.closest(".popup img")
+      popup &&
+      (event.target.classList.contains("close-button") ||
+        event.target.closest(".popup img"))
     ) {
       popup.style.display = "none";
     }

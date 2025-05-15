@@ -120,6 +120,8 @@ function filtrar_imoveis()
         'meta_query' => array(), // Inicializa o meta_query
     );
 
+    file_put_contents(__DIR__.'/debug-filtrar.txt', "POST:\n" . print_r($_POST, true));
+
     // Filtro por tipo de negócio (aluguel ou venda) baseado no campo personalizado 'tipo_negocio'
 if (!empty($_POST['type'])) {
     $args['meta_query'][] = array(
@@ -149,6 +151,15 @@ if (!empty($_POST['type'])) {
 
         $args['meta_query'][] = $price_query;
     }
+
+    // Filtro por localização (campo preenchível)
+if (!empty($_POST['location'])) {
+    $args['meta_query'][] = array(
+        'key'     => 'endereco', // nome do campo personalizado
+        'value'   => sanitize_text_field($_POST['location']),
+        'compare' => 'LIKE'
+    );
+}
 
     // Filtro por número mínimo de banheiros
     if (!empty($_POST['bathrooms_min'])) {
