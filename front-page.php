@@ -33,6 +33,19 @@ $client3_image = image_exists(get_template_directory() . '/assets/images/client3
 ?>
 
 <!-- Seção Hero -->
+<style>
+ .btn-warning {
+    background-color: #F1BE1B !important;
+    border-color: #F1BE1B !important;
+    color: white !important;
+}
+
+.btn-warning:hover {
+    background-color: #d1a800 !important;
+    border-color: #d1a800 !important;
+}
+</style>
+
 <section class="hero-section bg-dark position-relative overflow-hidden">
   <div class="position-absolute top-0 start-0 w-100 h-100"
     style="background: linear-gradient(45deg, rgba(49,47,47,0.9) 0%, rgba(241,190,27,0.1) 100%);"></div>
@@ -319,7 +332,7 @@ $client3_image = image_exists(get_template_directory() . '/assets/images/client3
   <div class="position-absolute top-0 start-0 w-100 h-100"
     style="background: linear-gradient(45deg, rgba(49,47,47,0.9) 0%, rgba(241,190,27,0.1) 100%);"></div>
   <div class="container position-relative py-5">
-    <div class="row align-items-center">
+    <div class="row align-items-center"> 
       <div class="col-lg-6 mb-4 mb-lg-0 animate__animated animate__fadeInLeft">
         <h2 class="fw-bold mb-4">Vamos conversar sobre seu próximo imóvel?</h2>
         <p class="lead mb-4">Entre em contato para um atendimento personalizado e descubra as melhores oportunidades na
@@ -365,32 +378,10 @@ $client3_image = image_exists(get_template_directory() . '/assets/images/client3
 
       <div class="col-lg-6 animate__animated animate__fadeInRight">
         <div class="card border-0 shadow-lg hover-shadow transition">
-          <div class="card-body p-4">
+          <div class="card-body p-4" style="justify-items: center;">
             <h3 class="text-dark mb-4">Envie sua mensagem</h3>
-            <form>
-              <div class="mb-3">
-                <input type="text" class="form-control" placeholder="Nome completo">
-              </div>
-              <div class="mb-3">
-                <input type="email" class="form-control" placeholder="E-mail">
-              </div>
-              <div class="mb-3">
-                <input type="tel" class="form-control" placeholder="Telefone">
-              </div>
-              <div class="mb-3">
-                <select class="form-select">
-                  <option selected>Qual seu interesse?</option>
-                  <option>Comprar imóvel</option>
-                  <option>Vender imóvel</option>
-                  <option>Alugar imóvel</option>
-                  <option>Consultoria</option>
-                </select>
-              </div>
-              <div class="mb-3">
-                <textarea class="form-control" rows="4" placeholder="Sua mensagem"></textarea>
-              </div>
-              <button type="submit" class="btn btn-warning w-100">Enviar mensagem</button>
-            </form>
+
+            <?php echo do_shortcode('[wpforms id="38"]'); ?>
           </div>
         </div>
       </div>
