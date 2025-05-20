@@ -381,7 +381,7 @@ $client3_image = image_exists(get_template_directory() . '/assets/images/client3
           <div class="card-body p-4" style="justify-items: center;">
             <h3 class="text-dark mb-4">Envie sua mensagem</h3>
 
-            <?php echo do_shortcode('[wpforms id="38"]'); ?>
+            <?php echo do_shortcode('[wpforms id="39"]'); ?>
           </div>
         </div>
       </div>
