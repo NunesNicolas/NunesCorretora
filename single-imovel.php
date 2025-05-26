@@ -1,27 +1,71 @@
 <?php get_header(); ?>
 
 <?php
-$descricao = get_the_content(); 
-$tem_aluguel = get_post_meta(get_the_ID(), 'tipo_negocio', true) === 'aluguel'; 
+$descricao = get_the_content();
+$tem_aluguel = get_post_meta(get_the_ID(), 'tipo_negocio', true) === 'aluguel';
 ?>
 
 <style>
 .carousel-inner {
   width: 100%;
-  min-height: 60vh;
- max-height: 90vh;
+  height: 500px;
+  /* Altura fixa definida */
   background-color: black;
-  display: flex;
-  align-items: center; /* Centraliza verticalmente o conteúdo */
-  justify-content: center;
+  position: relative;
+  overflow: hidden;
 }
 
-.carousel-inner img {
-  height: 100%;
+.carousel-item {
   width: 100%;
+  height: 100%;
+  position: relative;
+  transition: transform .6s ease-in-out;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.carousel-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-size: cover;
+  background-position: center;
+  filter: blur(10px);
+  transform: scale(1.1);
+  z-index: 1;
+  opacity: 0;
+  transition: opacity .6s ease-in-out;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.carousel-item.active::before {
+  opacity: 1;
+}
+
+.carousel-item img {
+  position: relative;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
-  object-position: center;  
-  background-color: black;
+  object-position: center;
+  z-index: 2;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.carousel-item::before {
+  background-image: var(--bg-image);
+}
+
+@media (max-width: 768px) {
+  .carousel-inner {
+    height: 300px;
+    /* Altura menor para dispositivos móveis */
+  }
 }
 </style>
 
@@ -31,48 +75,54 @@ $tem_aluguel = get_post_meta(get_the_ID(), 'tipo_negocio', true) === 'aluguel';
       <h1 class="mb-4">
         <?php the_title(); ?>
         <?php if ($tem_aluguel): ?>
-          - Aluguel
+        - Aluguel
         <?php endif; ?>
       </h1>
 
       <?php if ($galeria = rwmb_meta('galeria_imagens', array('size' => 'imovel-thumb'))): ?>
-        <div id="carouselExampleIndicators" class="carousel slide mb-4" data-bs-ride="carousel">
-          <ol class="carousel-indicators">
-            <?php 
-            $slide_index = 0; 
+      <div id="carouselExampleIndicators" class="carousel slide mb-4" data-bs-ride="carousel">
+        <ol class="carousel-indicators">
+          <?php
+            $slide_index = 0;
             if (has_post_thumbnail()): ?>
-              <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"></li>
-              <?php $slide_index++; ?>
-            <?php endif; ?>
-            <?php foreach ($galeria as $index => $imagem): ?>
-              <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<?php echo $slide_index; ?>" class=""></li>
-              <?php $slide_index++; ?>
-            <?php endforeach; ?>
-          </ol>
-          <div class="carousel-inner">
-            <!-- Primeira imagem: Imagem destacada -->
-            <?php if (has_post_thumbnail()): ?>
-              <div class="carousel-item active">
-                <img class="d-block w-100" src="<?php echo esc_url(get_the_post_thumbnail_url(get_the_ID(), 'imovel-single')); ?>" alt="<?php the_title(); ?>" data-bs-toggle="modal" data-bs-target="#imageModal" data-bs-image="<?php echo esc_url(get_the_post_thumbnail_url(get_the_ID(), 'full')); ?>">
-              </div>
-            <?php endif; ?>
-
-            <!-- Demais imagens da galeria -->
-            <?php foreach ($galeria as $index => $imagem): ?>
-              <div class="carousel-item">
-                <img class="d-block w-100" src="<?php echo esc_url($imagem['url']); ?>" alt="<?php echo esc_attr($imagem['alt']); ?>" data-bs-toggle="modal" data-bs-target="#imageModal" data-bs-image="<?php echo esc_url($imagem['url']); ?>">
-              </div>
-            <?php endforeach; ?>
+          <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"></li>
+          <?php $slide_index++; ?>
+          <?php endif; ?>
+          <?php foreach ($galeria as $index => $imagem): ?>
+          <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<?php echo $slide_index; ?>" class=""></li>
+          <?php $slide_index++; ?>
+          <?php endforeach; ?>
+        </ol>
+        <div class="carousel-inner">
+          <!-- Primeira imagem: Imagem destacada -->
+          <?php if (has_post_thumbnail()): ?>
+          <div class="carousel-item active"
+            style="--bg-image: url('<?php echo esc_url(get_the_post_thumbnail_url(get_the_ID(), 'full')); ?>')">
+            <img class="d-block w-100"
+              src="<?php echo esc_url(get_the_post_thumbnail_url(get_the_ID(), 'imovel-single')); ?>"
+              alt="<?php the_title(); ?>" data-bs-toggle="modal" data-bs-target="#imageModal"
+              data-bs-image="<?php echo esc_url(get_the_post_thumbnail_url(get_the_ID(), 'full')); ?>">
           </div>
-          <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Anterior</span>
-          </a>
-          <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Próximo</span>
-          </a>
+          <?php endif; ?>
+
+          <!-- Demais imagens da galeria -->
+          <?php foreach ($galeria as $index => $imagem): ?>
+          <div class="carousel-item" style="--bg-image: url('<?php echo esc_url($imagem['url']); ?>')">
+            <img class="d-block w-100" src="<?php echo esc_url($imagem['url']); ?>"
+              alt="<?php echo esc_attr($imagem['alt']); ?>" data-bs-toggle="modal" data-bs-target="#imageModal"
+              data-bs-image="<?php echo esc_url($imagem['url']); ?>">
+          </div>
+          <?php endforeach; ?>
         </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Anterior</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Próximo</span>
+        </a>
+      </div>
       <?php endif; ?>
 
       <!-- Modal -->
@@ -90,17 +140,17 @@ $tem_aluguel = get_post_meta(get_the_ID(), 'tipo_negocio', true) === 'aluguel';
       </div>
 
       <script>
-        document.addEventListener('DOMContentLoaded', function () {
-          const modalImage = document.getElementById('modalImage');
-          const carouselImages = document.querySelectorAll('.carousel-item img');
+      document.addEventListener('DOMContentLoaded', function() {
+        const modalImage = document.getElementById('modalImage');
+        const carouselImages = document.querySelectorAll('.carousel-item img');
 
-          carouselImages.forEach(image => {
-            image.addEventListener('click', function () {
-              const imageUrl = this.getAttribute('data-bs-image');
-              modalImage.setAttribute('src', imageUrl);
-            });
+        carouselImages.forEach(image => {
+          image.addEventListener('click', function() {
+            const imageUrl = this.getAttribute('data-bs-image');
+            modalImage.setAttribute('src', imageUrl);
           });
         });
+      });
       </script>
 
       <div class="imovel-content mb-4 p-4 bg-light rounded shadow-sm">
@@ -117,47 +167,47 @@ $tem_aluguel = get_post_meta(get_the_ID(), 'tipo_negocio', true) === 'aluguel';
           <h3 class="card-title h4 mb-4 text-secondary">Informações do Imóvel</h3>
 
           <?php if ($price = get_post_meta(get_the_ID(), 'preco', true)): ?>
-            <div class="price-box mb-4 p-3 bg-light rounded-3">
-              <p class="price h3 mb-0 <?php echo $tem_aluguel ? 'text-warning' : 'text-success'; ?>">
-                R$ <?php echo number_format($price, 2, ',', '.'); ?>
-              </p>
-            </div>
+          <div class="price-box mb-4 p-3 bg-light rounded-3">
+            <p class="price h3 mb-0 <?php echo $tem_aluguel ? 'text-warning' : 'text-success'; ?>">
+              R$ <?php echo number_format($price, 2, ',', '.'); ?>
+            </p>
+          </div>
           <?php endif; ?>
 
           <ul class="list-group list-group-flush mb-4">
             <?php if ($area = get_post_meta(get_the_ID(), 'area', true)): ?>
-              <li class="list-group-item d-flex align-items-center border-0 py-3">
-                <i class="fas fa-vector-square text-secondary mr-3"></i>
-                <span>Área: <?php echo $area; ?> m²</span>
-              </li>
+            <li class="list-group-item d-flex align-items-center border-0 py-3">
+              <i class="fas fa-vector-square text-secondary mr-3"></i>
+              <span>Área: <?php echo $area; ?> m²</span>
+            </li>
             <?php endif; ?>
 
             <?php if ($quartos = get_post_meta(get_the_ID(), 'quartos', true)): ?>
-              <li class="list-group-item d-flex align-items-center border-0 py-3">
-                <i class="fas fa-bed text-secondary mr-3"></i>
-                <span>Quartos: <?php echo $quartos; ?></span>
-              </li>
+            <li class="list-group-item d-flex align-items-center border-0 py-3">
+              <i class="fas fa-bed text-secondary mr-3"></i>
+              <span>Quartos: <?php echo $quartos; ?></span>
+            </li>
             <?php endif; ?>
 
             <?php if ($banheiros = get_post_meta(get_the_ID(), 'banheiros', true)): ?>
-              <li class="list-group-item d-flex align-items-center border-0 py-3">
-                <i class="fas fa-bath text-secondary mr-3"></i>
-                <span>Banheiros: <?php echo $banheiros; ?></span>
-              </li>
+            <li class="list-group-item d-flex align-items-center border-0 py-3">
+              <i class="fas fa-bath text-secondary mr-3"></i>
+              <span>Banheiros: <?php echo $banheiros; ?></span>
+            </li>
             <?php endif; ?>
 
             <?php if ($garagem = get_post_meta(get_the_ID(), 'garagem', true)): ?>
-              <li class="list-group-item d-flex align-items-center border-0 py-3">
-                <i class="fas fa-car text-secondary mr-3"></i>
-                <span>vagas: <?php echo $garagem; ?></span>
-              </li>
+            <li class="list-group-item d-flex align-items-center border-0 py-3">
+              <i class="fas fa-car text-secondary mr-3"></i>
+              <span>vagas: <?php echo $garagem; ?></span>
+            </li>
             <?php endif; ?>
 
             <?php if ($endereco = get_post_meta(get_the_ID(), 'endereco', true)): ?>
-              <li class="list-group-item d-flex align-items-center border-0 py-3">
-                <i class="fas fa-map-marker-alt text-secondary mr-3"></i>
-                <span>Endereço: <?php echo $endereco; ?></span>
-              </li>
+            <li class="list-group-item d-flex align-items-center border-0 py-3">
+              <i class="fas fa-map-marker-alt text-secondary mr-3"></i>
+              <span>Endereço: <?php echo $endereco; ?></span>
+            </li>
             <?php endif; ?>
           </ul>
 
@@ -171,4 +221,4 @@ $tem_aluguel = get_post_meta(get_the_ID(), 'tipo_negocio', true) === 'aluguel';
   </div>
 </section>
 
-<?php get_footer(); ?>  
+<?php get_footer(); ?>
