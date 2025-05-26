@@ -7,7 +7,9 @@ $tem_aluguel = get_post_meta(get_the_ID(), 'tipo_negocio', true) === 'aluguel';
 
 <style>
 .carousel-inner {
-  height: 40vh;
+  width: 100%;
+  min-height: 60vh;
+ max-height: 90vh;
   background-color: black;
   display: flex;
   align-items: center; /* Centraliza verticalmente o conteúdo */
@@ -25,7 +27,7 @@ $tem_aluguel = get_post_meta(get_the_ID(), 'tipo_negocio', true) === 'aluguel';
 
 <section class="container py-5">
   <div class="row">
-    <div class="col-lg-8">
+    <div class="col-lg-7">
       <h1 class="mb-4">
         <?php the_title(); ?>
         <?php if ($tem_aluguel): ?>
@@ -109,7 +111,7 @@ $tem_aluguel = get_post_meta(get_the_ID(), 'tipo_negocio', true) === 'aluguel';
       </div>
     </div>
 
-    <div class="col-lg-4">
+    <div class="col-lg-5">
       <div class="card border-0 shadow-sm">
         <div class="card-body p-4">
           <h3 class="card-title h4 mb-4 text-secondary">Informações do Imóvel</h3>

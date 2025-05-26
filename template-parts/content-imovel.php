@@ -53,7 +53,14 @@ $tem_aluguel = get_post_meta(get_the_ID(), 'tipo_negocio', true) === 'aluguel';
           R$ <?php echo number_format($preco, 2, ',', '.'); ?>
         </p>
       <?php endif; ?>
-
+        
+         <?php if (function_exists('get_post_meta') && function_exists('get_the_ID') && ($endereco = get_post_meta(get_the_ID(), 'endereco', true))): ?>
+        <div class="local mb-1" style="color:gray;">
+            <i class="bi bi-geo-alt-fill"></i>
+            <span><?php echo esc_html($endereco); ?></span>
+          </div>
+      <?php endif; ?>
+      
       <div class="features">
         <?php if ($area = get_post_meta(get_the_ID(), 'area', true)): ?>
           <div class="feature-item">
