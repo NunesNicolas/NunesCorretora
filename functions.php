@@ -114,22 +114,22 @@ add_action('admin_menu', 'wpdocs_remove_menus');
 
 function filtrar_imoveis()
 {
-    $args = array(  
+    $args = array(
         'post_type' => 'imovel',
         'posts_per_page' => -1,
         'meta_query' => array(), // Inicializa o meta_query
     );
 
-    file_put_contents(__DIR__.'/debug-filtrar.txt', "POST:\n" . print_r($_POST, true));
+    file_put_contents(__DIR__ . '/debug-filtrar.txt', "POST:\n" . print_r($_POST, true));
 
     // Filtro por tipo de negócio (aluguel ou venda) baseado no campo personalizado 'tipo_negocio'
-if (!empty($_POST['type'])) {
-    $args['meta_query'][] = array(
-        'key' => 'tipo_negocio', // Nome do campo personalizado
-        'value' => sanitize_text_field($_POST['type']), // Valor enviado pelo formulário
-        'compare' => '=', // Verifica igualdade
-    );
-}
+    if (!empty($_POST['type'])) {
+        $args['meta_query'][] = array(
+            'key' => 'tipo_negocio', // Nome do campo personalizado
+            'value' => sanitize_text_field($_POST['type']), // Valor enviado pelo formulário
+            'compare' => '=', // Verifica igualdade
+        );
+    }
 
     // Filtro por faixa de preço
     if (!empty($_POST['price_min']) || !empty($_POST['price_max'])) {
@@ -153,13 +153,13 @@ if (!empty($_POST['type'])) {
     }
 
     // Filtro por localização (campo preenchível)
-if (!empty($_POST['location'])) {
-    $args['meta_query'][] = array(
-        'key'     => 'endereco', // nome do campo personalizado
-        'value'   => sanitize_text_field($_POST['location']),
-        'compare' => 'LIKE'
-    );
-}
+    if (!empty($_POST['location'])) {
+        $args['meta_query'][] = array(
+            'key' => 'endereco', // nome do campo personalizado
+            'value' => sanitize_text_field($_POST['location']),
+            'compare' => 'LIKE'
+        );
+    }
 
     // Filtro por número mínimo de banheiros
     if (!empty($_POST['bathrooms_min'])) {
@@ -224,6 +224,7 @@ function regiane_add_image_sizes()
 {
     add_image_size('imovel-thumb', 400, 300, true);
     add_image_size('imovel-single', 1200, 800, true);
+    add_image_size('imovel-carousel', 1200, 800, false);
 }
 add_action('after_setup_theme', 'regiane_add_image_sizes');
 
@@ -288,9 +289,16 @@ add_action('after_switch_theme', 'regiane_create_pages');
 // Carregar scripts e estilos
 function regiane_corretora_scripts()
 {
+    // jQuery (garantir que seja carregado primeiro)
+    wp_enqueue_script('jquery');
+
     // Bootstrap
     wp_enqueue_style('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css');
     wp_enqueue_script('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js', array('jquery'), null, true);
+
+    // Swiper
+    wp_enqueue_style('swiper', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css');
+    wp_enqueue_script('swiper', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js', array(), null, true);
 
     // Font Awesome
     wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
@@ -298,12 +306,9 @@ function regiane_corretora_scripts()
     // Google Fonts
     wp_enqueue_style('google-fonts', 'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
-    // jQuery
-    wp_enqueue_script('jquery');
-
     // Estilos e scripts do tema
     wp_enqueue_style('main-style', get_template_directory_uri() . '/style.css', array('bootstrap', 'font-awesome', 'google-fonts'));
-    wp_enqueue_script('main-js', get_template_directory_uri() . '/assets/js/main.js', array('jquery', 'bootstrap'), null, true);
+    wp_enqueue_script('main-js', get_template_directory_uri() . '/assets/js/main.js', array('jquery', 'bootstrap', 'swiper'), null, true);
 }
 add_action('wp_enqueue_scripts', 'regiane_corretora_scripts');
 
@@ -331,7 +336,7 @@ add_action('admin_menu', 'regiane_corretora_config');
 // Página de opções
 function regiane_corretora_options_page()
 {
-?>
+    ?>
     <div class="wrap">
         <h1>Configurações da Regiane Corretora</h1>
         <form method="post" action="options.php">
@@ -362,7 +367,7 @@ function regiane_corretora_options_page()
             <?php submit_button(); ?>
         </form>
     </div>
-<?php
+    <?php
 }
 
 function load_featured_properties()
@@ -395,13 +400,13 @@ add_action('wp_ajax_nopriv_load_featured_properties', 'load_featured_properties'
 // Variáveis para JS
 function regiane_js_vars()
 {
-?>
+    ?>
     <script type="text/javascript">
         var regiane_vars = {
             ajaxurl: '<?php echo admin_url("admin-ajax.php"); ?>'
         };
     </script>
-<?php
+    <?php
 }
 add_action('wp_head', 'regiane_js_vars');
 
@@ -439,7 +444,7 @@ add_action('admin_menu', 'regiane_add_recreate_pages_button');
 // Callback para a página de administração das páginas do tema
 function regiane_pages_callback()
 {
-?>
+    ?>
     <div class="wrap">
         <h1>Páginas do Tema Regiane Corretora</h1>
 
@@ -456,129 +461,129 @@ function regiane_pages_callback()
             Recriar Páginas do Tema
         </a>
     </div> <?php
+}
+
+// Forçar o uso do template correto baseado no slug da página
+function regiane_page_template($template)
+{
+    global $post;
+
+    if (is_page()) {
+        $page_slug = $post->post_name;
+
+        if ($page_slug == 'sobre' && file_exists(get_template_directory() . '/page-sobre.php')) {
+            return get_template_directory() . '/page-sobre.php';
         }
 
-        // Forçar o uso do template correto baseado no slug da página
-        function regiane_page_template($template)
-        {
-            global $post;
-
-            if (is_page()) {
-                $page_slug = $post->post_name;
-
-                if ($page_slug == 'sobre' && file_exists(get_template_directory() . '/page-sobre.php')) {
-                    return get_template_directory() . '/page-sobre.php';
-                }
-
-                if ($page_slug == 'imoveis' && file_exists(get_template_directory() . '/page-imoveis.php')) {
-                    return get_template_directory() . '/page-imoveis.php';
-                }
-            }
-
-            return $template;
+        if ($page_slug == 'imoveis' && file_exists(get_template_directory() . '/page-imoveis.php')) {
+            return get_template_directory() . '/page-imoveis.php';
         }
-        add_filter('template_include', 'regiane_page_template');
+    }
 
-        // Função para forçar a criação das páginas agora
-        function regiane_force_create_pages()
-        {
-            $pages = array(
-                'Sobre Nós' => array(
-                    'slug' => 'sobre',
-                    'file' => 'sobre.php',
-                    'content' => ''
-                ),
-                'Imóveis' => array(
-                    'slug' => 'imoveis',
-                    'file' => 'imoveis.php',
-                    'content' => ''
-                )
-            );
+    return $template;
+}
+add_filter('template_include', 'regiane_page_template');
 
-            foreach ($pages as $title => $page_data) {
-                // Verificar se a página já existe
-                $existing_page = get_page_by_path($page_data['slug']);
+// Função para forçar a criação das páginas agora
+function regiane_force_create_pages()
+{
+    $pages = array(
+        'Sobre Nós' => array(
+            'slug' => 'sobre',
+            'file' => 'sobre.php',
+            'content' => ''
+        ),
+        'Imóveis' => array(
+            'slug' => 'imoveis',
+            'file' => 'imoveis.php',
+            'content' => ''
+        )
+    );
 
-                if ($existing_page) {
-                    // Se a página existe, atualize-a para garantir que esteja publicada e com o template correto
-                    wp_update_post(array(
-                        'ID' => $existing_page->ID,
-                        'post_status' => 'publish',
-                        'page_template' => $page_data['file']
-                    ));
+    foreach ($pages as $title => $page_data) {
+        // Verificar se a página já existe
+        $existing_page = get_page_by_path($page_data['slug']);
 
-                    // Atualizar o meta de template
-                    update_post_meta($existing_page->ID, '_wp_page_template', $page_data['file']);
-                } else {
-                    // Se a página não existe, crie-a
-                    $page_id = wp_insert_post(array(
-                        'post_title' => $title,
-                        'post_name' => $page_data['slug'],
-                        'post_status' => 'publish',
-                        'post_type' => 'page',
-                        'post_content' => $page_data['content']
-                    ));
+        if ($existing_page) {
+            // Se a página existe, atualize-a para garantir que esteja publicada e com o template correto
+            wp_update_post(array(
+                'ID' => $existing_page->ID,
+                'post_status' => 'publish',
+                'page_template' => $page_data['file']
+            ));
 
-                    if ($page_id && !is_wp_error($page_id)) {
-                        update_post_meta($page_id, '_wp_page_template', $page_data['file']);
-                    }
-                }
-            }
+            // Atualizar o meta de template
+            update_post_meta($existing_page->ID, '_wp_page_template', $page_data['file']);
+        } else {
+            // Se a página não existe, crie-a
+            $page_id = wp_insert_post(array(
+                'post_title' => $title,
+                'post_name' => $page_data['slug'],
+                'post_status' => 'publish',
+                'post_type' => 'page',
+                'post_content' => $page_data['content']
+            ));
 
-            // Forçar atualização das regras de rewrite
-            flush_rewrite_rules();
-        }
-
-        // Execute a função imediatamente
-        add_action('init', 'regiane_force_create_pages');
-
-        // Adicionando um hook para executar quando o usuário clicar no botão
-        function regiane_handle_admin_actions()
-        {
-            // Verificar se a ação foi solicitada
-            if (isset($_GET['action']) && $_GET['action'] == 'force_create_pages') {
-                // Executar a criação de páginas
-                regiane_force_create_pages();
-
-                // Redirecionar para evitar problemas de refresh
-                wp_redirect(admin_url('index.php?page=regiane-pages-created'));
-                exit;
+            if ($page_id && !is_wp_error($page_id)) {
+                update_post_meta($page_id, '_wp_page_template', $page_data['file']);
             }
         }
-        add_action('admin_init', 'regiane_handle_admin_actions');
+    }
 
-        // Adicionar mensagem de notificação para o admin
-        function regiane_admin_notices()
-        {
-            // Se estamos na tela de administração e a página foi criada
-            if (isset($_GET['page']) && $_GET['page'] == 'regiane-pages-created') {
-            ?>
+    // Forçar atualização das regras de rewrite
+    flush_rewrite_rules();
+}
+
+// Execute a função imediatamente
+add_action('init', 'regiane_force_create_pages');
+
+// Adicionando um hook para executar quando o usuário clicar no botão
+function regiane_handle_admin_actions()
+{
+    // Verificar se a ação foi solicitada
+    if (isset($_GET['action']) && $_GET['action'] == 'force_create_pages') {
+        // Executar a criação de páginas
+        regiane_force_create_pages();
+
+        // Redirecionar para evitar problemas de refresh
+        wp_redirect(admin_url('index.php?page=regiane-pages-created'));
+        exit;
+    }
+}
+add_action('admin_init', 'regiane_handle_admin_actions');
+
+// Adicionar mensagem de notificação para o admin
+function regiane_admin_notices()
+{
+    // Se estamos na tela de administração e a página foi criada
+    if (isset($_GET['page']) && $_GET['page'] == 'regiane-pages-created') {
+        ?>
         <div class="notice notice-success is-dismissible">
             <p><strong>Sucesso!</strong> As páginas do tema foram criadas/atualizadas com sucesso.</p>
         </div>
-    <?php
-            }
-        }
-        add_action('admin_notices', 'regiane_admin_notices');
+        <?php
+    }
+}
+add_action('admin_notices', 'regiane_admin_notices');
 
-        // Adicionar a ação ao menu do WordPress
-        function regiane_add_menu_item()
-        {
-            add_menu_page(
-                'Regiane Corretora',
-                'Regiane Corretora',
-                'manage_options',
-                'regiane-menu',
-                'regiane_menu_page',
-                'dashicons-admin-home',
-                20
-            );
-        }
-        add_action('admin_menu', 'regiane_add_menu_item');
+// Adicionar a ação ao menu do WordPress
+function regiane_add_menu_item()
+{
+    add_menu_page(
+        'Regiane Corretora',
+        'Regiane Corretora',
+        'manage_options',
+        'regiane-menu',
+        'regiane_menu_page',
+        'dashicons-admin-home',
+        20
+    );
+}
+add_action('admin_menu', 'regiane_add_menu_item');
 
-        // Conteúdo da página do menu
-        function regiane_menu_page()
-        {
+// Conteúdo da página do menu
+function regiane_menu_page()
+{
     ?>
     <div class="wrap">
         <h1>Regiane Corretora - Gerenciamento do Tema</h1>
@@ -601,14 +606,37 @@ function regiane_pages_callback()
                     corretora</a>.</p>
         </div>
     </div>
-<?php
-        }
+    <?php
+}
 
-        require_once('model/post-types/imoveis/galeria.php');
+require_once('model/post-types/imoveis/galeria.php');
 
-        function regiane_enqueue_fancybox()
-        {
-            wp_enqueue_style('fancybox', 'https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css');
-            wp_enqueue_script('fancybox', 'https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js', array('jquery'), null, true);
-        }
-        add_action('wp_enqueue_scripts', 'regiane_enqueue_fancybox');
+function regiane_enqueue_fancybox()
+{
+    wp_enqueue_style('fancybox', 'https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css');
+    wp_enqueue_script('fancybox', 'https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js', array('jquery'), null, true);
+}
+add_action('wp_enqueue_scripts', 'regiane_enqueue_fancybox');
+
+// Garante que as imagens sejam redimensionadas corretamente
+add_filter('wp_get_attachment_image_src', 'fix_wp_get_attachment_image_src', 10, 4);
+function fix_wp_get_attachment_image_src($image, $attachment_id, $size, $icon)
+{
+    if ($image) {
+        $image[1] = $image[1] ?: 1200;
+        $image[2] = $image[2] ?: 800;
+    }
+    return $image;
+}
+
+// Força o WordPress a gerar todas as imagens necessárias
+add_filter('intermediate_image_sizes_advanced', 'add_custom_image_sizes');
+function add_custom_image_sizes($sizes)
+{
+    $sizes['imovel-carousel'] = array(
+        'width' => 1200,
+        'height' => 800,
+        'crop' => false
+    );
+    return $sizes;
+}

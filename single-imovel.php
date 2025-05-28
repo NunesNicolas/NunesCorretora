@@ -6,65 +6,91 @@ $tem_aluguel = get_post_meta(get_the_ID(), 'tipo_negocio', true) === 'aluguel';
 ?>
 
 <style>
-.carousel-inner {
+.imovel-carousel {
   width: 100%;
   height: 500px;
-  /* Altura fixa definida */
   background-color: black;
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
   overflow: hidden;
 }
 
-.carousel-item {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  transition: transform .6s ease-in-out;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-}
-
-.carousel-item::before {
+.swiper-slide::before {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
+  background-image: var(--bg-image);
   background-size: cover;
   background-position: center;
-  filter: blur(10px);
+  filter: blur(20px);
   transform: scale(1.1);
   z-index: 1;
   opacity: 0;
-  transition: opacity .6s ease-in-out;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
+  transition: opacity 0.3s ease;
 }
 
-.carousel-item.active::before {
+.swiper-slide-active::before {
   opacity: 1;
 }
 
-.carousel-item img {
+.swiper-slide img {
   position: relative;
-  width: 100%;
-  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
   object-fit: contain;
-  object-position: center;
   z-index: 2;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
 }
 
-.carousel-item::before {
-  background-image: var(--bg-image);
+.swiper-button-next,
+.swiper-button-prev {
+  color: white;
+  background: rgba(0, 0, 0, 0.5);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  z-index: 3;
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after {
+  font-size: 20px;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.swiper-pagination-bullet {
+  background: white;
+  opacity: 0.5;
+  z-index: 3;
+}
+
+.swiper-pagination-bullet-active {
+  opacity: 1;
 }
 
 @media (max-width: 768px) {
-  .carousel-inner {
+  .imovel-carousel {
     height: 300px;
-    /* Altura menor para dispositivos móveis */
   }
 }
 </style>
@@ -80,49 +106,56 @@ $tem_aluguel = get_post_meta(get_the_ID(), 'tipo_negocio', true) === 'aluguel';
       </h1>
 
       <?php if ($galeria = rwmb_meta('galeria_imagens', array('size' => 'imovel-thumb'))): ?>
-      <div id="carouselExampleIndicators" class="carousel slide mb-4" data-bs-ride="carousel">
-        <ol class="carousel-indicators">
-          <?php
-            $slide_index = 0;
-            if (has_post_thumbnail()): ?>
-          <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"></li>
-          <?php $slide_index++; ?>
-          <?php endif; ?>
-          <?php foreach ($galeria as $index => $imagem): ?>
-          <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<?php echo $slide_index; ?>" class=""></li>
-          <?php $slide_index++; ?>
-          <?php endforeach; ?>
-        </ol>
-        <div class="carousel-inner">
-          <!-- Primeira imagem: Imagem destacada -->
-          <?php if (has_post_thumbnail()): ?>
-          <div class="carousel-item active"
-            style="--bg-image: url('<?php echo esc_url(get_the_post_thumbnail_url(get_the_ID(), 'full')); ?>')">
-            <img class="d-block w-100"
-              src="<?php echo esc_url(get_the_post_thumbnail_url(get_the_ID(), 'imovel-single')); ?>"
-              alt="<?php the_title(); ?>" data-bs-toggle="modal" data-bs-target="#imageModal"
-              data-bs-image="<?php echo esc_url(get_the_post_thumbnail_url(get_the_ID(), 'full')); ?>">
-          </div>
-          <?php endif; ?>
+      <div class="imovel-carousel">
+        <div class="swiper">
+          <div class="swiper-wrapper">
+            <?php if (has_post_thumbnail()): ?>
+            <div class="swiper-slide"
+              style="--bg-image: url('<?php echo esc_url(get_the_post_thumbnail_url(get_the_ID(), 'full')); ?>')">
+              <img src="<?php echo esc_url(get_the_post_thumbnail_url(get_the_ID(), 'imovel-single')); ?>"
+                alt="<?php the_title(); ?>" data-bs-toggle="modal" data-bs-target="#imageModal"
+                data-bs-image="<?php echo esc_url(get_the_post_thumbnail_url(get_the_ID(), 'full')); ?>">
+            </div>
+            <?php endif; ?>
 
-          <!-- Demais imagens da galeria -->
-          <?php foreach ($galeria as $index => $imagem): ?>
-          <div class="carousel-item" style="--bg-image: url('<?php echo esc_url($imagem['url']); ?>')">
-            <img class="d-block w-100" src="<?php echo esc_url($imagem['url']); ?>"
-              alt="<?php echo esc_attr($imagem['alt']); ?>" data-bs-toggle="modal" data-bs-target="#imageModal"
-              data-bs-image="<?php echo esc_url($imagem['url']); ?>">
+            <?php foreach ($galeria as $index => $imagem): ?>
+            <div class="swiper-slide" style="--bg-image: url('<?php echo esc_url($imagem['url']); ?>')">
+              <img src="<?php echo esc_url($imagem['url']); ?>" alt="<?php echo esc_attr($imagem['alt']); ?>"
+                data-bs-toggle="modal" data-bs-target="#imageModal"
+                data-bs-image="<?php echo esc_url($imagem['url']); ?>">
+            </div>
+            <?php endforeach; ?>
           </div>
-          <?php endforeach; ?>
+
+          <div class="swiper-pagination"></div>
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
         </div>
-        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Anterior</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Próximo</span>
-        </a>
       </div>
+
+      <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const swiper = new Swiper('.swiper', {
+          effect: 'fade',
+          fadeEffect: {
+            crossFade: true
+          },
+          loop: true,
+          autoplay: {
+            delay: 5000,
+            disableOnInteraction: false,
+          },
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+        });
+      });
+      </script>
       <?php endif; ?>
 
       <!-- Modal -->
@@ -142,7 +175,7 @@ $tem_aluguel = get_post_meta(get_the_ID(), 'tipo_negocio', true) === 'aluguel';
       <script>
       document.addEventListener('DOMContentLoaded', function() {
         const modalImage = document.getElementById('modalImage');
-        const carouselImages = document.querySelectorAll('.carousel-item img');
+        const carouselImages = document.querySelectorAll('.swiper-slide img');
 
         carouselImages.forEach(image => {
           image.addEventListener('click', function() {
