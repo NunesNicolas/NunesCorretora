@@ -222,8 +222,8 @@ add_action('wp_enqueue_scripts', 'registrar_scripts_filtro');
  */
 function regiane_add_image_sizes()
 {
-    add_image_size('imovel-thumb', 400, 300, true);
-    add_image_size('imovel-single', 1200, 800, true);
+    add_image_size('imovel-thumb', 600, 450, false);
+    add_image_size('imovel-single', 1200, 800, false);
     add_image_size('imovel-carousel', 1200, 800, false);
 }
 add_action('after_setup_theme', 'regiane_add_image_sizes');
@@ -337,37 +337,37 @@ add_action('admin_menu', 'regiane_corretora_config');
 function regiane_corretora_options_page()
 {
     ?>
-    <div class="wrap">
-        <h1>Configurações da Regiane Corretora</h1>
-        <form method="post" action="options.php">
-            <?php settings_fields('regiane_corretora_options'); ?>
-            <table class="form-table">
-                <tr>
-                    <th><label for="regiane_phone">Telefone:</label></th>
-                    <td>
-                        <input type="text" id="regiane_phone" name="regiane_phone"
-                            value="<?php echo esc_attr(get_option('regiane_phone')); ?>" class="regular-text">
-                    </td>
-                </tr>
-                <tr>
-                    <th><label for="regiane_email">E-mail:</label></th>
-                    <td>
-                        <input type="email" id="regiane_email" name="regiane_email"
-                            value="<?php echo esc_attr(get_option('regiane_email')); ?>" class="regular-text">
-                    </td>
-                </tr>
-                <tr>
-                    <th><label for="regiane_address">Endereço:</label></th>
-                    <td>
-                        <textarea id="regiane_address" name="regiane_address"
-                            class="regular-text"><?php echo esc_textarea(get_option('regiane_address')); ?></textarea>
-                    </td>
-                </tr>
-            </table>
-            <?php submit_button(); ?>
-        </form>
-    </div>
-    <?php
+<div class="wrap">
+  <h1>Configurações da Regiane Corretora</h1>
+  <form method="post" action="options.php">
+    <?php settings_fields('regiane_corretora_options'); ?>
+    <table class="form-table">
+      <tr>
+        <th><label for="regiane_phone">Telefone:</label></th>
+        <td>
+          <input type="text" id="regiane_phone" name="regiane_phone"
+            value="<?php echo esc_attr(get_option('regiane_phone')); ?>" class="regular-text">
+        </td>
+      </tr>
+      <tr>
+        <th><label for="regiane_email">E-mail:</label></th>
+        <td>
+          <input type="email" id="regiane_email" name="regiane_email"
+            value="<?php echo esc_attr(get_option('regiane_email')); ?>" class="regular-text">
+        </td>
+      </tr>
+      <tr>
+        <th><label for="regiane_address">Endereço:</label></th>
+        <td>
+          <textarea id="regiane_address" name="regiane_address"
+            class="regular-text"><?php echo esc_textarea(get_option('regiane_address')); ?></textarea>
+        </td>
+      </tr>
+    </table>
+    <?php submit_button(); ?>
+  </form>
+</div>
+<?php
 }
 
 function load_featured_properties()
@@ -401,12 +401,12 @@ add_action('wp_ajax_nopriv_load_featured_properties', 'load_featured_properties'
 function regiane_js_vars()
 {
     ?>
-    <script type="text/javascript">
-        var regiane_vars = {
-            ajaxurl: '<?php echo admin_url("admin-ajax.php"); ?>'
-        };
-    </script>
-    <?php
+<script type="text/javascript">
+var regiane_vars = {
+  ajaxurl: '<?php echo admin_url("admin-ajax.php"); ?>'
+};
+</script>
+<?php
 }
 add_action('wp_head', 'regiane_js_vars');
 
@@ -445,22 +445,22 @@ add_action('admin_menu', 'regiane_add_recreate_pages_button');
 function regiane_pages_callback()
 {
     ?>
-    <div class="wrap">
-        <h1>Páginas do Tema Regiane Corretora</h1>
+<div class="wrap">
+  <h1>Páginas do Tema Regiane Corretora</h1>
 
-        <?php if (isset($_GET['pages_recreated']) && $_GET['pages_recreated'] == 1): ?>
-            <div class="notice notice-success is-dismissible">
-                <p>Páginas recriadas com sucesso!</p>
-            </div>
-        <?php endif; ?>
+  <?php if (isset($_GET['pages_recreated']) && $_GET['pages_recreated'] == 1): ?>
+  <div class="notice notice-success is-dismissible">
+    <p>Páginas recriadas com sucesso!</p>
+  </div>
+  <?php endif; ?>
 
-        <p>Se você estiver enfrentando problemas com as páginas do tema, como a página "Sobre Nós" ou "Imóveis" não
-            exibindo corretamente, use o botão abaixo para recriar as páginas do tema e atualizar as regras de URL.</p>
+  <p>Se você estiver enfrentando problemas com as páginas do tema, como a página "Sobre Nós" ou "Imóveis" não
+    exibindo corretamente, use o botão abaixo para recriar as páginas do tema e atualizar as regras de URL.</p>
 
-        <a href="<?php echo admin_url('themes.php?page=regiane-pages&recreate_pages=1'); ?>" class="button button-primary">
-            Recriar Páginas do Tema
-        </a>
-    </div> <?php
+  <a href="<?php echo admin_url('themes.php?page=regiane-pages&recreate_pages=1'); ?>" class="button button-primary">
+    Recriar Páginas do Tema
+  </a>
+</div> <?php
 }
 
 // Forçar o uso do template correto baseado no slug da página
@@ -558,10 +558,10 @@ function regiane_admin_notices()
     // Se estamos na tela de administração e a página foi criada
     if (isset($_GET['page']) && $_GET['page'] == 'regiane-pages-created') {
         ?>
-        <div class="notice notice-success is-dismissible">
-            <p><strong>Sucesso!</strong> As páginas do tema foram criadas/atualizadas com sucesso.</p>
-        </div>
-        <?php
+<div class="notice notice-success is-dismissible">
+  <p><strong>Sucesso!</strong> As páginas do tema foram criadas/atualizadas com sucesso.</p>
+</div>
+<?php
     }
 }
 add_action('admin_notices', 'regiane_admin_notices');
@@ -585,28 +585,28 @@ add_action('admin_menu', 'regiane_add_menu_item');
 function regiane_menu_page()
 {
     ?>
-    <div class="wrap">
-        <h1>Regiane Corretora - Gerenciamento do Tema</h1>
+<div class="wrap">
+  <h1>Regiane Corretora - Gerenciamento do Tema</h1>
 
-        <div class="card">
-            <h2 class="title">Páginas do Tema</h2>
-            <p>Se você estiver tendo problemas com as páginas "Sobre Nós" ou "Imóveis", use o botão abaixo para criar ou
-                atualizar essas páginas.</p>
+  <div class="card">
+    <h2 class="title">Páginas do Tema</h2>
+    <p>Se você estiver tendo problemas com as páginas "Sobre Nós" ou "Imóveis", use o botão abaixo para criar ou
+      atualizar essas páginas.</p>
 
-            <a href="<?php echo admin_url('admin.php?page=regiane-menu&action=force_create_pages'); ?>"
-                class="button button-primary">
-                Criar/Atualizar Páginas do Tema
-            </a>
-        </div>
+    <a href="<?php echo admin_url('admin.php?page=regiane-menu&action=force_create_pages'); ?>"
+      class="button button-primary">
+      Criar/Atualizar Páginas do Tema
+    </a>
+  </div>
 
-        <div class="card" style="margin-top: 20px;">
-            <h2 class="title">Configurações Gerais</h2>
-            <p>Configure os dados de contato da corretora nas <a
-                    href="<?php echo admin_url('options-general.php?page=regiane-corretora'); ?>">configurações da
-                    corretora</a>.</p>
-        </div>
-    </div>
-    <?php
+  <div class="card" style="margin-top: 20px;">
+    <h2 class="title">Configurações Gerais</h2>
+    <p>Configure os dados de contato da corretora nas <a
+        href="<?php echo admin_url('options-general.php?page=regiane-corretora'); ?>">configurações da
+        corretora</a>.</p>
+  </div>
+</div>
+<?php
 }
 
 require_once('model/post-types/imoveis/galeria.php');
