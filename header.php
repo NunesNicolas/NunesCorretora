@@ -288,10 +288,15 @@
       </div>
     </div>
 
-    <nav class="navbar navbar-expand-lg navbar-light">
+    <nav class="navbar navbar-expand-lg navbar-dark">
       <div class="container navbar-container">
         <a class="navbar-brand d-flex align-items-center" href="<?php echo esc_url(home_url('/')); ?>">
-          <img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo.png" alt="Regiane Nunes Corretora">
+          <?php if (has_custom_logo()): ?>
+            <?php the_custom_logo(); ?>
+          <?php else: ?>
+            <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/logo.png'); ?>"
+              alt="<?php echo esc_attr(get_bloginfo('name')); ?>">
+          <?php endif; ?>
         </a>
         <button class="navbar-toggler ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
           aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -309,7 +314,7 @@
                 href="<?php echo esc_url(home_url('/sobre')); ?>">Sobre Nós</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link <?php echo is_page('imoveis') ? 'active' : ''; ?>"
+              <a class="nav-link <?php echo (is_page('imoveis') || is_post_type_archive('imovel')) ? 'active' : ''; ?>"
                 href="<?php echo esc_url(home_url('/imoveis')); ?>">Imóveis</a>
             </li>
           </ul>

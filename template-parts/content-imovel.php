@@ -99,23 +99,6 @@ $tem_aluguel = get_post_meta(get_the_ID(), 'tipo_negocio', true) === 'aluguel';
 </div>
 
 <style>
-  :root {
-    --primary: #312F2F;
-    --secondary: #F1BE1B;
-    --light: #FFFFFF;
-    --dark: #312F2F;
-    --warning: #F1BE1B;
-    --gray-100: #f8f9fa;
-    --gray-200: #e9ecef;
-    --gray-300: #dee2e6;
-    --gray-400: #ced4da;
-    --gray-500: #adb5bd;
-    --gray-600: #6c757d;
-    --gray-700: #495057;
-    --gray-800: #343a40;
-    --gray-900: #212529;
-  }
-
   /* Imóveis */
   .imovel-card {
     transition: all 0.3s ease;

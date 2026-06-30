@@ -46,6 +46,54 @@ $client3_image = image_exists(get_template_directory() . '/assets/images/client3
 }
 </style>
 
+<!-- Seção Destaques -->
+<section class="featured-first-section py-5">
+  <div class="container">
+    <div class="d-flex flex-column flex-lg-row align-items-lg-end justify-content-between mb-4">
+      <div>
+        <span class="section-kicker">Oportunidades selecionadas</span>
+        <h1 class="fw-bold text-dark mb-2">Imóveis em Destaque</h1>
+        <p class="text-muted mb-0">Veja primeiro os imóveis com maior potencial para compra ou aluguel.</p>
+      </div>
+      <a href="<?php echo esc_url(home_url('/imoveis')); ?>" class="btn btn-warning mt-3 mt-lg-0">
+        Ver todos os imóveis
+      </a>
+    </div>
+
+    <div class="row" id="featured-properties-top">
+      <?php
+      $destaques = new WP_Query(array(
+        'post_type' => 'imovel',
+        'posts_per_page' => 4,
+        'meta_query' => array(
+          array(
+            'key' => 'destaque',
+            'value' => '1',
+            'compare' => '='
+          )
+        )
+      ));
+
+      if ($destaques->have_posts()):
+        while ($destaques->have_posts()):
+          $destaques->the_post();
+          get_template_part('template-parts/content', 'imovel');
+        endwhile;
+        wp_reset_postdata();
+      else:
+        ?>
+        <div class="col-12 text-center">
+          <div class="alert alert-light border shadow-sm">
+            <p class="mb-0">Em breve novos imóveis em destaque. Entre em contato para conhecer nossa oferta completa!</p>
+          </div>
+        </div>
+        <?php
+      endif;
+      ?>
+    </div>
+  </div>
+</section>
+
 <section class="hero-section bg-dark position-relative overflow-hidden">
   <div class="position-absolute top-0 start-0 w-100 h-100"
     style="background: linear-gradient(45deg, rgba(49,47,47,0.9) 0%, rgba(241,190,27,0.1) 100%);"></div>

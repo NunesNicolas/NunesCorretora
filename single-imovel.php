@@ -3,6 +3,58 @@
 <?php
 $descricao = get_the_content();
 $tem_aluguel = get_post_meta(get_the_ID(), 'tipo_negocio', true) === 'aluguel';
+$galeria = function_exists('rwmb_meta') ? rwmb_meta('galeria_imagens', array('size' => 'imovel-carousel')) : array();
+$carousel_images = array();
+$carousel_seen = array();
+
+if (has_post_thumbnail()) {
+  $featured_full = get_the_post_thumbnail_url(get_the_ID(), 'full');
+  $featured_single = get_the_post_thumbnail_url(get_the_ID(), 'imovel-single');
+  $carousel_images[] = array(
+    'url' => $featured_single,
+    'full' => $featured_full,
+    'alt' => get_the_title(),
+  );
+  $carousel_seen[$featured_full] = true;
+}
+
+foreach ((array) $galeria as $imagem) {
+  if (empty($imagem['url']) || isset($carousel_seen[$imagem['url']])) {
+    continue;
+  }
+
+  $carousel_images[] = array(
+    'url' => $imagem['url'],
+    'full' => $imagem['url'],
+    'alt' => !empty($imagem['alt']) ? $imagem['alt'] : get_the_title(),
+  );
+  $carousel_seen[$imagem['url']] = true;
+}
+
+if (preg_match_all('/<img[^>]+src=["\']([^"\']+)["\'][^>]*>/i', $descricao, $content_images, PREG_SET_ORDER)) {
+  foreach ($content_images as $content_image) {
+    $image_html = $content_image[0];
+    $image_url = $content_image[1];
+
+    if (isset($carousel_seen[$image_url])) {
+      continue;
+    }
+
+    $image_alt = get_the_title();
+    if (preg_match('/alt=["\']([^"\']*)["\']/i', $image_html, $alt_match) && $alt_match[1] !== '') {
+      $image_alt = $alt_match[1];
+    }
+
+    $carousel_images[] = array(
+      'url' => $image_url,
+      'full' => $image_url,
+      'alt' => $image_alt,
+    );
+    $carousel_seen[$image_url] = true;
+  }
+}
+
+$tem_imagens = !empty($carousel_images);
 ?>
 
 <style>
@@ -88,9 +140,65 @@ $tem_aluguel = get_post_meta(get_the_ID(), 'tipo_negocio', true) === 'aluguel';
     opacity: 1;
   }
 
+  .property-modal-body {
+    align-items: center;
+    background: #111;
+    display: flex;
+    justify-content: center;
+    min-height: 60vh;
+    position: relative;
+  }
+
+  .property-modal-body img {
+    max-height: 82vh;
+    object-fit: contain;
+  }
+
+  .property-modal-nav {
+    align-items: center;
+    background: rgba(0, 0, 0, 0.55);
+    border: 0;
+    border-radius: 999px;
+    color: #fff;
+    display: flex;
+    height: 44px;
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    z-index: 5;
+  }
+
+  .property-modal-nav:hover {
+    background: rgba(0, 0, 0, 0.8);
+  }
+
+  .property-modal-prev {
+    left: 16px;
+  }
+
+  .property-modal-next {
+    right: 16px;
+  }
+
+  .property-modal-counter {
+    color: #fff;
+    font-weight: 700;
+    left: 50%;
+    position: absolute;
+    top: 14px;
+    transform: translateX(-50%);
+    z-index: 5;
+  }
+
   @media (max-width: 768px) {
     .imovel-carousel {
       height: 300px;
+    }
+
+    .property-modal-body {
+      min-height: 55vh;
     }
   }
 </style>
@@ -105,24 +213,16 @@ $tem_aluguel = get_post_meta(get_the_ID(), 'tipo_negocio', true) === 'aluguel';
         <?php endif; ?>
       </h1>
 
-      <?php if ($galeria = rwmb_meta('galeria_imagens', array('size' => 'imovel-carousel'))): ?>
+      <?php if ($tem_imagens): ?>
         <div class="imovel-carousel">
           <div class="swiper">
             <div class="swiper-wrapper">
-              <?php if (has_post_thumbnail()): ?>
-                <div class="swiper-slide"
-                  style="--bg-image: url('<?php echo esc_url(get_the_post_thumbnail_url(get_the_ID(), 'full')); ?>')">
-                  <img src="<?php echo esc_url(get_the_post_thumbnail_url(get_the_ID(), 'imovel-single')); ?>"
-                    alt="<?php the_title(); ?>" data-bs-toggle="modal" data-bs-target="#imageModal"
-                    data-bs-image="<?php echo esc_url(get_the_post_thumbnail_url(get_the_ID(), 'full')); ?>">
-                </div>
-              <?php endif; ?>
-
-              <?php foreach ($galeria as $index => $imagem): ?>
-                <div class="swiper-slide" style="--bg-image: url('<?php echo esc_url($imagem['url']); ?>')">
+              <?php foreach ($carousel_images as $index => $imagem): ?>
+                <div class="swiper-slide" style="--bg-image: url('<?php echo esc_url($imagem['full']); ?>')">
                   <img src="<?php echo esc_url($imagem['url']); ?>" alt="<?php echo esc_attr($imagem['alt']); ?>"
                     data-bs-toggle="modal" data-bs-target="#imageModal"
-                    data-bs-image="<?php echo esc_url($imagem['url']); ?>">
+                    data-bs-image="<?php echo esc_url($imagem['full']); ?>"
+                    data-bs-index="<?php echo esc_attr($index); ?>">
                 </div>
               <?php endforeach; ?>
             </div>
@@ -135,6 +235,10 @@ $tem_aluguel = get_post_meta(get_the_ID(), 'tipo_negocio', true) === 'aluguel';
 
         <script>
           document.addEventListener('DOMContentLoaded', function () {
+            if (typeof Swiper === 'undefined') {
+              return;
+            }
+
             const swiper = new Swiper('.swiper', {
               effect: 'fade',
               fadeEffect: {
@@ -156,14 +260,26 @@ $tem_aluguel = get_post_meta(get_the_ID(), 'tipo_negocio', true) === 'aluguel';
             });
           });
         </script>
+      <?php else: ?>
+        <div class="imovel-carousel imovel-carousel-placeholder">
+          <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/placeholder.jpg'); ?>"
+            alt="<?php echo esc_attr(get_the_title()); ?>">
+        </div>
       <?php endif; ?>
 
       <!-- Modal -->
       <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
           <div class="modal-content">
-            <div class="modal-body p-0">
+            <div class="modal-body p-0 property-modal-body">
+              <span id="modalImageCounter" class="property-modal-counter"></span>
+              <button type="button" class="property-modal-nav property-modal-prev" id="modalImagePrev" aria-label="Imagem anterior">
+                <i class="fas fa-chevron-left"></i>
+              </button>
               <img id="modalImage" src="" class="img-fluid w-100" alt="Imagem ampliada">
+              <button type="button" class="property-modal-nav property-modal-next" id="modalImageNext" aria-label="Próxima imagem">
+                <i class="fas fa-chevron-right"></i>
+              </button>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
@@ -174,24 +290,66 @@ $tem_aluguel = get_post_meta(get_the_ID(), 'tipo_negocio', true) === 'aluguel';
 
       <script>
         document.addEventListener('DOMContentLoaded', function () {
+          const imageModal = document.getElementById('imageModal');
           const modalImage = document.getElementById('modalImage');
+          const modalCounter = document.getElementById('modalImageCounter');
+          const modalPrev = document.getElementById('modalImagePrev');
+          const modalNext = document.getElementById('modalImageNext');
           const carouselImages = document.querySelectorAll('.swiper-slide img');
+          const modalImages = Array.from(carouselImages).map(image => ({
+            src: image.getAttribute('data-bs-image'),
+            alt: image.getAttribute('alt') || 'Imagem ampliada'
+          }));
+          let currentModalIndex = 0;
+
+          function showModalImage(index) {
+            if (!modalImages.length) {
+              return;
+            }
+
+            currentModalIndex = (index + modalImages.length) % modalImages.length;
+            modalImage.setAttribute('src', modalImages[currentModalIndex].src);
+            modalImage.setAttribute('alt', modalImages[currentModalIndex].alt);
+
+            if (modalCounter) {
+              modalCounter.textContent = (currentModalIndex + 1) + ' / ' + modalImages.length;
+            }
+          }
 
           carouselImages.forEach(image => {
             image.addEventListener('click', function () {
-              const imageUrl = this.getAttribute('data-bs-image');
-              modalImage.setAttribute('src', imageUrl);
+              showModalImage(Number(this.getAttribute('data-bs-index') || 0));
             });
+          });
+
+          if (modalPrev) {
+            modalPrev.addEventListener('click', function () {
+              showModalImage(currentModalIndex - 1);
+            });
+          }
+
+          if (modalNext) {
+            modalNext.addEventListener('click', function () {
+              showModalImage(currentModalIndex + 1);
+            });
+          }
+
+          document.addEventListener('keydown', function (event) {
+            if (!imageModal || !imageModal.classList.contains('show')) {
+              return;
+            }
+
+            if (event.key === 'ArrowLeft') {
+              showModalImage(currentModalIndex - 1);
+            }
+
+            if (event.key === 'ArrowRight') {
+              showModalImage(currentModalIndex + 1);
+            }
           });
         });
       </script>
 
-      <div class="imovel-content mb-4 p-4 bg-light rounded shadow-sm">
-        <h2 class="h4 mb-3 text-secondary">Descrição do Imóvel</h2>
-        <div class="text-dark">
-          <?php the_content(); ?>
-        </div>
-      </div>
     </div>
 
     <div class="col-lg-5">
@@ -211,35 +369,35 @@ $tem_aluguel = get_post_meta(get_the_ID(), 'tipo_negocio', true) === 'aluguel';
             <?php if ($area = get_post_meta(get_the_ID(), 'area', true)): ?>
               <li class="list-group-item d-flex align-items-center border-0 py-3">
                 <i class="fas fa-vector-square text-secondary mr-3"></i>
-                <span>Área: <?php echo $area; ?> m²</span>
+                <span>Área: <?php echo esc_html($area); ?> m²</span>
               </li>
             <?php endif; ?>
 
             <?php if ($quartos = get_post_meta(get_the_ID(), 'quartos', true)): ?>
               <li class="list-group-item d-flex align-items-center border-0 py-3">
                 <i class="fas fa-bed text-secondary mr-3"></i>
-                <span>Quartos: <?php echo $quartos; ?></span>
+                <span>Quartos: <?php echo esc_html($quartos); ?></span>
               </li>
             <?php endif; ?>
 
             <?php if ($banheiros = get_post_meta(get_the_ID(), 'banheiros', true)): ?>
               <li class="list-group-item d-flex align-items-center border-0 py-3">
                 <i class="fas fa-bath text-secondary mr-3"></i>
-                <span>Banheiros: <?php echo $banheiros; ?></span>
+                <span>Banheiros: <?php echo esc_html($banheiros); ?></span>
               </li>
             <?php endif; ?>
 
             <?php if ($garagem = get_post_meta(get_the_ID(), 'garagem', true)): ?>
               <li class="list-group-item d-flex align-items-center border-0 py-3">
                 <i class="fas fa-car text-secondary mr-3"></i>
-                <span>vagas: <?php echo $garagem; ?></span>
+                <span>Vagas: <?php echo esc_html($garagem); ?></span>
               </li>
             <?php endif; ?>
 
             <?php if ($endereco = get_post_meta(get_the_ID(), 'endereco', true)): ?>
               <li class="list-group-item d-flex align-items-center border-0 py-3">
                 <i class="fas fa-map-marker-alt text-secondary mr-3"></i>
-                <span>Endereço: <?php echo $endereco; ?></span>
+                <span>Endereço: <?php echo esc_html($endereco); ?></span>
               </li>
             <?php endif; ?>
           </ul>

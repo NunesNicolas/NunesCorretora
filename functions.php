@@ -26,6 +26,12 @@ require_once('model/scripts.php');
  */
 
 add_theme_support('post-thumbnails');
+add_theme_support('custom-logo', array(
+    'height' => 80,
+    'width' => 260,
+    'flex-height' => true,
+    'flex-width' => true,
+));
 
 /**
  * Registrar menus de navegação
@@ -114,13 +120,14 @@ add_action('admin_menu', 'wpdocs_remove_menus');
 
 function filtrar_imoveis()
 {
+    $posts_per_page = 9;
+    $paged = !empty($_POST['paged']) ? max(1, intval($_POST['paged'])) : 1;
     $args = array(
         'post_type' => 'imovel',
-        'posts_per_page' => -1,
+        'posts_per_page' => $posts_per_page,
+        'paged' => $paged,
         'meta_query' => array(), // Inicializa o meta_query
     );
-
-    file_put_contents(__DIR__ . '/debug-filtrar.txt', "POST:\n" . print_r($_POST, true));
 
     // Filtro por tipo de negócio (aluguel ou venda) baseado no campo personalizado 'tipo_negocio'
     if (!empty($_POST['type'])) {
@@ -192,6 +199,10 @@ function filtrar_imoveis()
     }
 
     $query = new WP_Query($args);
+    $map_args = $args;
+    $map_args['posts_per_page'] = -1;
+    unset($map_args['paged']);
+    $map_items = regiane_get_imoveis_map_items(new WP_Query($map_args));
 
     if ($query->have_posts()) {
         ob_start();
@@ -200,22 +211,117 @@ function filtrar_imoveis()
             get_template_part('template-parts/content', 'imovel');
         }
         wp_reset_postdata();
-        wp_send_json_success(ob_get_clean());
+        wp_send_json_success(array(
+            'html' => ob_get_clean(),
+            'count' => $query->found_posts,
+            'map_items' => $map_items,
+            'pagination' => regiane_render_imoveis_pagination($paged, $query->max_num_pages),
+        ));
     } else {
-        wp_send_json_error('<p class="text-center">Nenhum imóvel encontrado.</p>');
+        wp_send_json_error(array(
+            'html' => '<div class="col-12"><p class="empty-state text-center">Nenhum imóvel encontrado.</p></div>',
+            'count' => 0,
+            'map_items' => array(),
+            'pagination' => '',
+        ));
     }
 }
 add_action('wp_ajax_filtrar_imoveis', 'filtrar_imoveis');
 add_action('wp_ajax_nopriv_filtrar_imoveis', 'filtrar_imoveis');
 
+function regiane_render_imoveis_pagination($current_page, $max_pages)
+{
+    if ($max_pages <= 1) {
+        return '';
+    }
+
+    $links = paginate_links(array(
+        'base' => '#paged-%#%',
+        'format' => '',
+        'current' => max(1, intval($current_page)),
+        'total' => intval($max_pages),
+        'type' => 'array',
+        'prev_text' => '&laquo; Anterior',
+        'next_text' => 'Próximo &raquo;',
+    ));
+
+    if (empty($links)) {
+        return '';
+    }
+
+    $output = '<nav class="property-pagination" aria-label="Paginação de imóveis">';
+
+    foreach ($links as $link) {
+        $link = preg_replace_callback('/href=["\']#paged-(\d+)["\']/', function ($matches) {
+            return 'href="#" data-page="' . esc_attr($matches[1]) . '"';
+        }, $link);
+        $output .= $link;
+    }
+
+    $output .= '</nav>';
+
+    return $output;
+}
+
 function registrar_scripts_filtro()
 {
-    wp_enqueue_script('filters', get_template_directory_uri() . '/assets/js/filters.js', array('jquery'), null, true);
+    wp_enqueue_script('filters', get_template_directory_uri() . '/assets/js/filters.js', array('jquery'), '1.2', true);
     wp_localize_script('filters', 'regiane_vars', array(
         'ajaxurl' => admin_url('admin-ajax.php'),
     ));
 }
 add_action('wp_enqueue_scripts', 'registrar_scripts_filtro');
+
+function regiane_get_imoveis_map_items($query = null)
+{
+    $items = array();
+    $posts = array();
+
+    if ($query instanceof WP_Query) {
+        $posts = $query->posts;
+    } else {
+        $map_query = new WP_Query(array(
+            'post_type' => 'imovel',
+            'posts_per_page' => -1,
+            'post_status' => 'publish',
+        ));
+        $posts = $map_query->posts;
+        wp_reset_postdata();
+    }
+
+    foreach ($posts as $post) {
+        $lat = get_post_meta($post->ID, 'latitude', true);
+        $lng = get_post_meta($post->ID, 'longitude', true);
+
+        if ($lat === '' || $lng === '') {
+            continue;
+        }
+
+        $items[] = array(
+            'id' => $post->ID,
+            'title' => get_the_title($post),
+            'url' => get_permalink($post),
+            'price' => get_post_meta($post->ID, 'preco', true),
+            'address' => get_post_meta($post->ID, 'endereco', true),
+            'lat' => (float) $lat,
+            'lng' => (float) $lng,
+        );
+    }
+
+    return $items;
+}
+
+function regiane_enqueue_property_map()
+{
+    if (!is_page('imoveis') && !is_post_type_archive('imovel')) {
+        return;
+    }
+
+    wp_enqueue_style('leaflet', 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css', array(), '1.9.4');
+    wp_enqueue_script('leaflet', 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js', array(), '1.9.4', true);
+    wp_enqueue_script('property-map', get_template_directory_uri() . '/assets/js/property-map.js', array('leaflet'), '1.0', true);
+}
+add_action('wp_enqueue_scripts', 'regiane_enqueue_property_map');
 
 /**
  * Tamanhos de imagem customizados
@@ -370,6 +476,75 @@ function regiane_corretora_options_page()
 <?php
 }
 
+function regiane_customize_register($wp_customize)
+{
+    $wp_customize->add_section('regiane_visual_identity', array(
+        'title' => 'Identidade visual',
+        'priority' => 30,
+    ));
+
+    $colors = array(
+        'regiane_color_primary' => array('label' => 'Cor principal', 'default' => '#2f3432'),
+        'regiane_color_accent' => array('label' => 'Cor de destaque', 'default' => '#f1be1b'),
+        'regiane_color_surface' => array('label' => 'Fundo suave', 'default' => '#f7f4ec'),
+    );
+
+    foreach ($colors as $setting => $data) {
+        $wp_customize->add_setting($setting, array(
+            'default' => $data['default'],
+            'sanitize_callback' => 'sanitize_hex_color',
+        ));
+
+        $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, $setting, array(
+            'label' => $data['label'],
+            'section' => 'regiane_visual_identity',
+        )));
+    }
+
+    $wp_customize->add_setting('regiane_radius', array(
+        'default' => 18,
+        'sanitize_callback' => 'absint',
+    ));
+
+    $wp_customize->add_control('regiane_radius', array(
+        'label' => 'Arredondamento dos componentes',
+        'section' => 'regiane_visual_identity',
+        'type' => 'number',
+        'input_attrs' => array(
+            'min' => 0,
+            'max' => 32,
+            'step' => 1,
+        ),
+    ));
+}
+add_action('customize_register', 'regiane_customize_register');
+
+function regiane_print_theme_tokens()
+{
+    $primary = get_theme_mod('regiane_color_primary', '#2f3432');
+    $accent = get_theme_mod('regiane_color_accent', '#f1be1b');
+    $surface = get_theme_mod('regiane_color_surface', '#f7f4ec');
+    $radius = absint(get_theme_mod('regiane_radius', 18));
+    ?>
+<style id="regiane-theme-tokens">
+:root {
+  --primary: <?php echo esc_html($primary); ?>;
+  --dark: <?php echo esc_html($primary); ?>;
+  --gray-color: <?php echo esc_html($primary); ?>;
+  --navbar-bg: <?php echo esc_html($primary); ?>;
+  --secondary: <?php echo esc_html($accent); ?>;
+  --warning: <?php echo esc_html($accent); ?>;
+  --primary-color: <?php echo esc_html($accent); ?>;
+  --accent-color: <?php echo esc_html($accent); ?>;
+  --theme-surface: <?php echo esc_html($surface); ?>;
+  --theme-radius: <?php echo esc_html($radius); ?>px;
+  --theme-radius-sm: <?php echo esc_html(max(8, $radius - 8)); ?>px;
+}
+</style>
+<?php
+}
+add_action('wp_head', 'regiane_print_theme_tokens', 30);
+
 function load_featured_properties()
 {
     ob_start();
@@ -490,12 +665,12 @@ function regiane_force_create_pages()
     $pages = array(
         'Sobre Nós' => array(
             'slug' => 'sobre',
-            'file' => 'sobre.php',
+            'file' => 'page-sobre.php',
             'content' => ''
         ),
         'Imóveis' => array(
             'slug' => 'imoveis',
-            'file' => 'imoveis.php',
+            'file' => 'page-imoveis.php',
             'content' => ''
         )
     );
@@ -533,9 +708,6 @@ function regiane_force_create_pages()
     // Forçar atualização das regras de rewrite
     flush_rewrite_rules();
 }
-
-// Execute a função imediatamente
-add_action('init', 'regiane_force_create_pages');
 
 // Adicionando um hook para executar quando o usuário clicar no botão
 function regiane_handle_admin_actions()
