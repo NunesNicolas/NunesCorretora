@@ -60,7 +60,10 @@ $total_imoveis = $imoveis->found_posts;
 
           <div class="filter-field filter-field-location">
             <label for="filterLocation">Localizacao</label>
-            <input type="text" class="form-control" id="filterLocation" name="location" placeholder="Cidade, bairro ou rua">
+            <div class="location-autocomplete">
+              <input type="text" class="form-control" id="filterLocation" name="location" autocomplete="off" placeholder="Cidade, bairro ou rua">
+              <div id="propertyLocationSuggestions" class="location-suggestions" role="listbox"></div>
+            </div>
           </div>
 
           <div class="filter-field filter-field-features">

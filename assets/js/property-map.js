@@ -58,6 +58,35 @@
     var markerLayer = L.layerGroup().addTo(map);
     var areaLayer = L.layerGroup().addTo(map);
 
+    function focusArea(area) {
+      if (!area) {
+        return;
+      }
+
+      areaLayer.clearLayers();
+
+      if (area.bounds && area.bounds.length === 2) {
+        var bounds = L.latLngBounds(area.bounds);
+        map.fitBounds(bounds.pad(0.12), { maxZoom: 15 });
+        L.rectangle(bounds, {
+          color: '#f1be1b',
+          weight: 2,
+          fillColor: '#f1be1b',
+          fillOpacity: 0.10,
+        }).addTo(areaLayer);
+      } else if (area.lat && area.lng) {
+        var center = [Number(area.lat), Number(area.lng)];
+        map.setView(center, 13);
+        L.circle(center, {
+          radius: 1800,
+          color: '#f1be1b',
+          weight: 2,
+          fillColor: '#f1be1b',
+          fillOpacity: 0.12,
+        }).addTo(areaLayer);
+      }
+    }
+
     function render(items, total) {
       markerLayer.clearLayers();
       areaLayer.clearLayers();
@@ -89,8 +118,12 @@
       if (bounds.length) {
         var groupBounds = L.latLngBounds(bounds);
         map.fitBounds(groupBounds.pad(0.25), { maxZoom: 14 });
+        var northEast = groupBounds.getNorthEast();
+        var southWest = groupBounds.getSouthWest();
+        var radius = groupBounds.getCenter().distanceTo(northEast);
+
         L.circle(groupBounds.getCenter(), {
-          radius: Math.max(900, bounds.length * 450),
+          radius: Math.max(900, radius),
           color: '#f1be1b',
           weight: 2,
           fillColor: '#f1be1b',
@@ -117,6 +150,7 @@
 
     return {
       render: render,
+      focusArea: focusArea,
     };
   }
 

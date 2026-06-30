@@ -644,6 +644,59 @@ body.home section.py-5:has(#featured-properties) {
   min-height: 46px;
 }
 
+.location-autocomplete {
+  position: relative;
+}
+
+.location-suggestions {
+  background: #fff;
+  border: var(--theme-border);
+  border-radius: var(--theme-radius-sm);
+  box-shadow: 0 18px 36px rgba(33, 37, 41, 0.16);
+  display: none;
+  left: 0;
+  max-height: 280px;
+  overflow: auto;
+  padding: 6px;
+  position: absolute;
+  right: 0;
+  top: calc(100% + 6px);
+  z-index: 40;
+}
+
+.location-suggestions.is-open {
+  display: grid;
+  gap: 4px;
+}
+
+.location-suggestion-item {
+  background: transparent;
+  border: 0;
+  border-radius: 8px;
+  color: var(--dark);
+  display: grid;
+  padding: 9px 10px;
+  text-align: left;
+  width: 100%;
+}
+
+.location-suggestion-item:hover,
+.location-suggestion-item:focus {
+  background: var(--theme-surface);
+  outline: none;
+}
+
+.location-suggestion-item span {
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.location-suggestion-item small {
+  color: var(--gray-600);
+  font-size: 0.74rem;
+  margin-top: 2px;
+}
+
 .filter-grid-two,
 .filter-grid-three {
   display: grid;
@@ -850,6 +903,7 @@ body.single-imovel .card {
   .property-map-card {
     display: none;
   }
+
 }
 
 @media (max-width: 575.98px) {

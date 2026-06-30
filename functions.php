@@ -265,12 +265,107 @@ function regiane_render_imoveis_pagination($current_page, $max_pages)
 
 function registrar_scripts_filtro()
 {
-    wp_enqueue_script('filters', get_template_directory_uri() . '/assets/js/filters.js', array('jquery'), '1.2', true);
+    wp_enqueue_script('filters', get_template_directory_uri() . '/assets/js/filters.js', array('jquery'), '1.3', true);
     wp_localize_script('filters', 'regiane_vars', array(
         'ajaxurl' => admin_url('admin-ajax.php'),
+        'locations' => regiane_get_imoveis_location_suggestions(),
     ));
 }
 add_action('wp_enqueue_scripts', 'registrar_scripts_filtro');
+
+function regiane_get_imoveis_location_suggestions()
+{
+    $suggestions = array();
+    $posts = get_posts(array(
+        'post_type' => 'imovel',
+        'posts_per_page' => -1,
+        'post_status' => 'publish',
+        'fields' => 'ids',
+        'no_found_rows' => true,
+    ));
+
+    foreach ($posts as $post_id) {
+        $address = trim((string) get_post_meta($post_id, 'endereco', true));
+        $lat = get_post_meta($post_id, 'latitude', true);
+        $lng = get_post_meta($post_id, 'longitude', true);
+        $has_coords = $lat !== '' && $lng !== '';
+
+        if ($address === '') {
+            continue;
+        }
+
+        regiane_add_location_suggestion($suggestions, $address, 'endereco', $has_coords ? (float) $lat : null, $has_coords ? (float) $lng : null);
+        $parts = preg_split('/[,;-]+/', $address);
+
+        foreach ($parts as $index => $part) {
+            $part = trim($part);
+
+            if (strlen($part) >= 3) {
+                $type = $index === count($parts) - 1 ? 'cidade' : 'bairro';
+                regiane_add_location_suggestion($suggestions, $part, $type, $has_coords ? (float) $lat : null, $has_coords ? (float) $lng : null);
+            }
+        }
+    }
+
+    $items = array();
+
+    foreach ($suggestions as $label => $data) {
+        $items[] = array(
+            'label' => $label,
+            'value' => $label,
+            'type' => $data['type'],
+            'count' => $data['count'],
+            'lat' => $data['coord_count'] ? $data['lat_sum'] / $data['coord_count'] : null,
+            'lng' => $data['coord_count'] ? $data['lng_sum'] / $data['coord_count'] : null,
+        );
+    }
+
+    usort($items, function ($a, $b) {
+        if ($a['type'] !== $b['type']) {
+            $priority = array('bairro' => 0, 'cidade' => 1, 'endereco' => 2);
+            return ($priority[$a['type']] ?? 9) <=> ($priority[$b['type']] ?? 9);
+        }
+
+        if ($a['count'] !== $b['count']) {
+            return $b['count'] <=> $a['count'];
+        }
+
+        return strcasecmp($a['label'], $b['label']);
+    });
+
+    return $items;
+}
+
+function regiane_add_location_suggestion(&$suggestions, $label, $type, $lat = null, $lng = null)
+{
+    $label = preg_replace('/\s+/', ' ', trim((string) $label));
+
+    if ($label === '') {
+        return;
+    }
+
+    if (!isset($suggestions[$label])) {
+        $suggestions[$label] = array(
+            'type' => $type,
+            'count' => 0,
+            'lat_sum' => 0,
+            'lng_sum' => 0,
+            'coord_count' => 0,
+        );
+    }
+
+    if ($suggestions[$label]['type'] === 'endereco' && $type !== 'endereco') {
+        $suggestions[$label]['type'] = $type;
+    }
+
+    $suggestions[$label]['count']++;
+
+    if ($lat !== null && $lng !== null) {
+        $suggestions[$label]['lat_sum'] += $lat;
+        $suggestions[$label]['lng_sum'] += $lng;
+        $suggestions[$label]['coord_count']++;
+    }
+}
 
 function regiane_get_imoveis_map_items($query = null)
 {
